@@ -1,4 +1,4 @@
-package com.methleshkoshle.karmathfinal;
+package com.methleshkoshle.karmathfinal.pages;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;

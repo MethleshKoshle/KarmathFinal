@@ -1,6 +1,9 @@
-package com.methleshkoshle.karmathfinal;
+package com.methleshkoshle.karmathfinal.constant;
 
 import android.content.Intent;
+
+import com.methleshkoshle.karmathfinal.R;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,6 +55,8 @@ public class Constant {
         put("Dosti", 3); put("Guru", 4); put("Lagan", 5);
         put("Pyaar", 6); put("Prerna", 7); put("Tyag", 8);
     }};
+
+    public static final String songFileName="Song.txt";
 
     public static final String tempSongFile="SongTemp.txt";
 

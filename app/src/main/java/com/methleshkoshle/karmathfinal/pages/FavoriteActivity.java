@@ -1,4 +1,4 @@
-package com.methleshkoshle.karmathfinal;
+package com.methleshkoshle.karmathfinal.pages;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,7 +12,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.methleshkoshle.karmathfinal.constant.Constant;
 import com.methleshkoshle.karmathfinal.R;
+import com.methleshkoshle.karmathfinal.adapter.ContentAdapter;
+import com.methleshkoshle.karmathfinal.model.Content;
 
 import java.util.ArrayList;
 
@@ -24,7 +27,7 @@ import java.io.InputStreamReader;
 
 public class FavoriteActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
-    private ExampleContentAdapter mAdapter;
+    private ContentAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     private ClipboardManager myClipboard;
@@ -45,7 +48,7 @@ public class FavoriteActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Boolean isEmpty=true;
-        final ArrayList<ExampleContent> mExampleContentList = new ArrayList<>();
+        final ArrayList<Content> mContentList = new ArrayList<>();
         FileInputStream fis = null;
         try {
             fis = openFileInput(FILE_NAME);
@@ -80,10 +83,10 @@ public class FavoriteActivity extends AppCompatActivity {
                     if(arr.length>=3) {
                         int index = Constant.contentIndex.get(arr[1]);
                         isEmpty=false;
-                        ExampleContent temporaryContent = new ExampleContent(
+                        Content temporaryContent = new Content(
                                 Constant.imageResource[index], arr[2], true);
-                        if (!mExampleContentList.contains(temporaryContent))
-                            mExampleContentList.add(temporaryContent);
+                        if (!mContentList.contains(temporaryContent))
+                            mContentList.add(temporaryContent);
                     }
                 }
             }
@@ -114,20 +117,20 @@ public class FavoriteActivity extends AppCompatActivity {
 
         mLayoutManager = new LinearLayoutManager(this);
 
-        mAdapter = new ExampleContentAdapter(mExampleContentList);
+        mAdapter = new ContentAdapter(mContentList);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
         myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
-        mAdapter.setOnItemClickListener(new ExampleContentAdapter.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new ContentAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
 
             }
             @Override
             public void onCopyClick(int position) {
-                text = mExampleContentList.get(position).getContent();
+                text = mContentList.get(position).getContent();
                 myClip = ClipData.newPlainText("text", text);
                 myClipboard.setPrimaryClip(myClip);
 
@@ -147,7 +150,7 @@ public class FavoriteActivity extends AppCompatActivity {
                     shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
                     String shareMessage;//\nLet me recommend you this application:\n\n";
 //                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID +"\n\n";
-                    shareMessage = mExampleContentList.get(position).getContent() +"\n\n";
+                    shareMessage = mContentList.get(position).getContent() +"\n\n";
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                     startActivity(Intent.createChooser(shareIntent, "choose one"));
                 } catch(Exception e) {

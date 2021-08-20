@@ -1,4 +1,4 @@
-package com.methleshkoshle.karmathfinal;
+package com.methleshkoshle.karmathfinal.helper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

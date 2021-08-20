@@ -3,7 +3,7 @@ package com.methleshkoshle.karmathfinal.helper;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.methleshkoshle.karmathfinal.Conditionals;
+import com.methleshkoshle.karmathfinal.constant.Conditionals;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

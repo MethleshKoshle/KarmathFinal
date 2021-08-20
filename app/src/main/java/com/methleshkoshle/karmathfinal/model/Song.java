@@ -1,11 +1,11 @@
-package com.methleshkoshle.karmathfinal;
+package com.methleshkoshle.karmathfinal.model;
 
-public class ExampleSong {
+public class Song {
     private int mImageResource;
     private String mContent;
     private boolean mState;
 
-    public  ExampleSong(int imageResource, String content, boolean state){
+    public Song(int imageResource, String content, boolean state){
         mImageResource=imageResource;
         mContent=content;
         mState=state;

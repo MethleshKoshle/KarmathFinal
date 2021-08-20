@@ -1,4 +1,4 @@
-package com.methleshkoshle.karmathfinal;
+package com.methleshkoshle.karmathfinal.pages;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,24 +10,20 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.methleshkoshle.karmathfinal.R;
+import com.methleshkoshle.karmathfinal.adapter.ContentAdapter;
+import com.methleshkoshle.karmathfinal.model.Content;
 
 import java.util.ArrayList;
 
 public class TwolinerActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
-    private ExampleContentAdapter mAdapter;
+    private ContentAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private TextView mContent;
-
-    private ImageButton copyButton;
-    private ImageButton shareButton;
-    private CheckBox addFavorite;
 
     private ClipboardManager myClipboard;
     private ClipData myClip;
@@ -42,31 +38,31 @@ public class TwolinerActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final ArrayList<ExampleContent> mExampleContentList = new ArrayList<>();
-        mExampleContentList.add(new ExampleContent(R.drawable.ic_agyat, "Song Agyat Line 1", false));
-        mExampleContentList.add(new ExampleContent(R.drawable.ic_prema, "Song Pyaar Line 2", false));
-        mExampleContentList.add(new ExampleContent(R.drawable.ic_guru, "Song Guru Line 3", false));
+        final ArrayList<Content> mContentList = new ArrayList<>();
+        mContentList.add(new Content(R.drawable.ic_agyat, "Song Agyat Line 1", false));
+        mContentList.add(new Content(R.drawable.ic_prema, "Song Pyaar Line 2", false));
+        mContentList.add(new Content(R.drawable.ic_guru, "Song Guru Line 3", false));
 
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
 
         mLayoutManager = new LinearLayoutManager(this);
 
-        mAdapter = new ExampleContentAdapter(mExampleContentList);
+        mAdapter = new ContentAdapter(mContentList);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
         myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         mContent = findViewById(R.id.textView11);
 
-        mAdapter.setOnItemClickListener(new ExampleContentAdapter.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new ContentAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
 
             }
             @Override
             public void onCopyClick(int position) {
-                text = mExampleContentList.get(position).getContent();
+                text = mContentList.get(position).getContent();
                 myClip = ClipData.newPlainText("text", text);
                 myClipboard.setPrimaryClip(myClip);
 
@@ -84,9 +80,8 @@ public class TwolinerActivity extends AppCompatActivity {
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     shareIntent.setType("text/plain");
                     shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
-                    String shareMessage;//\nLet me recommend you this application:\n\n";
-//                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID +"\n\n";
-                    shareMessage = mExampleContentList.get(position).getContent() +"\n\n";
+                    String shareMessage;
+                    shareMessage = mContentList.get(position).getContent() +"\n\n";
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                     startActivity(Intent.createChooser(shareIntent, "choose one"));
                 } catch(Exception e) {

@@ -1,4 +1,4 @@
-package com.methleshkoshle.karmathfinal;
+package com.methleshkoshle.karmathfinal.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +12,12 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.methleshkoshle.karmathfinal.R;
+import com.methleshkoshle.karmathfinal.model.Content;
 
 import java.util.ArrayList;
 
-public class ExampleSongAdapter extends RecyclerView.Adapter<ExampleSongAdapter.ExampleSongViewHolder> {
-    private ArrayList<ExampleSong> mExampleSongList;
+public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ExampleContentViewHolder> {
+    private ArrayList<Content> mContentList;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
@@ -31,20 +32,20 @@ public class ExampleSongAdapter extends RecyclerView.Adapter<ExampleSongAdapter.
         mListener = listener;
     }
 
-    public static class ExampleSongViewHolder extends RecyclerView.ViewHolder {
+    public static class ExampleContentViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
         public TextView mContentView;
         public CheckBox mAddFavorite;
         public ImageButton mShare;
         public ImageButton mCopyContent;
 
-        public ExampleSongViewHolder(View itemView, final OnItemClickListener listener) {
+        public ExampleContentViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.contentIcon);
-            mContentView = itemView.findViewById(R.id.SongView);
+            mContentView = itemView.findViewById(R.id.textView11);
+            mAddFavorite = itemView.findViewById(R.id.addToFavorite);
             mShare = itemView.findViewById(R.id.shareContent);
             mCopyContent = itemView.findViewById(R.id.copyContent);
-            mAddFavorite = itemView.findViewById(R.id.addToFavorite);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -96,24 +97,24 @@ public class ExampleSongAdapter extends RecyclerView.Adapter<ExampleSongAdapter.
             });
         }
     }
-    public ExampleSongAdapter(ArrayList<ExampleSong> exampleList) {
-        mExampleSongList = exampleList;
+    public ContentAdapter(ArrayList<Content> exampleList) {
+        mContentList = exampleList;
     }
     @Override
-    public ExampleSongViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.example_song, parent, false);
-        ExampleSongViewHolder evh = new ExampleSongViewHolder(v, mListener);
+    public ExampleContentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.example_content, parent, false);
+        ExampleContentViewHolder evh = new ExampleContentViewHolder(v, mListener);
         return evh;
     }
     @Override
-    public void onBindViewHolder(ExampleSongViewHolder holder, int position) {
-        ExampleSong currentItem = mExampleSongList.get(position);
+    public void onBindViewHolder(ExampleContentViewHolder holder, int position) {
+        Content currentItem = mContentList.get(position);
         holder.mImageView.setImageResource(currentItem.getImageResource());
         holder.mContentView.setText(currentItem.getContent());
         holder.mAddFavorite.setChecked(currentItem.getState());
     }
     @Override
     public int getItemCount() {
-        return mExampleSongList.size();
+        return mContentList.size();
     }
 }

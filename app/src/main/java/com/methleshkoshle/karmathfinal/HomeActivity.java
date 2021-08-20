@@ -15,10 +15,21 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.methleshkoshle.karmathfinal.adapter.ItemAdapter;
+import com.methleshkoshle.karmathfinal.constant.Conditionals;
+import com.methleshkoshle.karmathfinal.constant.Constant;
+import com.methleshkoshle.karmathfinal.feedback.AboutmeActivity;
+import com.methleshkoshle.karmathfinal.feedback.WriteActivity;
+import com.methleshkoshle.karmathfinal.model.Item;
 import com.methleshkoshle.karmathfinal.pages.ContentActivity;
+import com.methleshkoshle.karmathfinal.pages.FavoriteActivity;
+import com.methleshkoshle.karmathfinal.pages.SongActivity;
+import com.methleshkoshle.karmathfinal.pages.ThoughtActivity;
 
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
@@ -27,10 +38,10 @@ import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class MainActivity2 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private RecyclerView mRecyclerView;
-    private ExampleAdapter mAdapter;
+    private ItemAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     private static Context context;
@@ -47,13 +58,13 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
                     startAsyncTask(Constant.sourceSongURL, Constant.tempSongFile, "गीत");
                 }
                 else{
-                    Toast.makeText(MainActivity2.this, "Connect to Internet to load new content!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, "Connect to Internet to load new content!", Toast.LENGTH_SHORT).show();
                 }
-                Intent intent1 = new Intent(MainActivity2.this, SongActivity.class);
+                Intent intent1 = new Intent(HomeActivity.this, SongActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.nav_favorites:
-                Intent intent2 = new Intent(MainActivity2.this, FavoriteActivity.class);
+                Intent intent2 = new Intent(HomeActivity.this, FavoriteActivity.class);
                 startActivity(intent2);
                 break;
             case R.id.nav_share:
@@ -70,15 +81,15 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
                 }
                 break;
             case R.id.nav_abt_me:
-                Intent intent5 = new Intent(MainActivity2.this, AboutmeActivity.class);
+                Intent intent5 = new Intent(HomeActivity.this, AboutmeActivity.class);
                 startActivity(intent5);
                 break;
             case R.id.nav_write_a_review:
-                Intent intent6 = new Intent(MainActivity2.this, WriteActivity.class);
+                Intent intent6 = new Intent(HomeActivity.this, WriteActivity.class);
                 startActivity(intent6);
                 break;
             case R.id.nav_thought:
-                Intent intent7 = new Intent(MainActivity2.this, ThoughtActivity.class);
+                Intent intent7 = new Intent(HomeActivity.this, ThoughtActivity.class);
                 startActivity(intent7);
                 break;
         }
@@ -88,8 +99,11 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity2.context = getApplicationContext();
-        setContentView(R.layout.activity_main2);
+        HomeActivity.context = getApplicationContext();
+        setContentView(R.layout.activity_home);
+
+//        ContentActivity.lottieAnimationView = findViewById(R.id.animation);
+//        ContentActivity.mRecyclerView = findViewById(R.id.recyclerView);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -104,10 +118,10 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
 
 
 
-        final ArrayList<ExampleItem> mExampleList = new ArrayList<>();
+        final ArrayList<Item> mExampleList = new ArrayList<>();
         for(int i=0; i<9; i++){
             mExampleList.add(
-                new ExampleItem(
+                new Item(
                     Constant.imageResource[i], Constant.hindiName[i], Constant.contentDescription[i]
                 )
             );
@@ -116,13 +130,13 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new ExampleAdapter(mExampleList);
+        mAdapter = new ItemAdapter(mExampleList);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setOnItemClickListener(new ExampleAdapter.OnItemClickListener() {
-            Intent intent = new Intent(MainActivity2.this, ContentActivity.class);
+        mAdapter.setOnItemClickListener(new ItemAdapter.OnItemClickListener() {
+            Intent intent = new Intent(HomeActivity.this, ContentActivity.class);
             @Override
             public void onItemClick(int position) {
                 ContentActivity.name = Constant.name[position];
@@ -135,7 +149,7 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
                             Constant.sourceURL[position], Constant.tempFileName[position], Constant.hindiName[position]);
                 }
                 else{
-                    Toast.makeText(MainActivity2.this, "Connect to Internet to load new content!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, "Connect to Internet to load new content!", Toast.LENGTH_SHORT).show();
                 }
                 startActivity(intent);
             }
@@ -154,19 +168,21 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
         TempFile=currentTempFile;
         nowActivity=currentActivity;
         nowUrl=urlToExecute;
-        ExampleAsyncTask task = new ExampleAsyncTask(MainActivity2.this);
+        ExampleAsyncTask task = new ExampleAsyncTask(HomeActivity.this);
+//        ContentActivity.lottieAnimationView.setVisibility(View.VISIBLE);
+//        ContentActivity.mRecyclerView.setVisibility(View.INVISIBLE);
         task.execute(urlToExecute);
     }
     @SuppressLint("StaticFieldLeak")
     class ExampleAsyncTask extends AsyncTask<String, String, String> {
-        private WeakReference<MainActivity2> activityWeakReference;
-        ExampleAsyncTask(MainActivity2 activity) {
-            activityWeakReference = new WeakReference<MainActivity2>(activity);
+        private WeakReference<HomeActivity> activityWeakReference;
+        ExampleAsyncTask(HomeActivity activity) {
+            activityWeakReference = new WeakReference<HomeActivity>(activity);
         }
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            MainActivity2 activity = activityWeakReference.get();
+            HomeActivity activity = activityWeakReference.get();
             if (activity == null || activity.isFinishing()) {
                 return;
             }
@@ -177,7 +193,7 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
             FileOutputStream fileOS = null;
             try {
                 BufferedInputStream inputStream = new BufferedInputStream(new URL(Strings[0]).openStream());
-                fileOS = MainActivity2.this.openFileOutput(TempFile, 0);
+                fileOS = HomeActivity.this.openFileOutput(TempFile, 0);
                 byte[] data = new byte[1024];
                 while (true) {
                     int read = inputStream.read(data, 0, 1024);
@@ -202,7 +218,7 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            MainActivity2 activity = activityWeakReference.get();
+            HomeActivity activity = activityWeakReference.get();
             if (activity == null || activity.isFinishing()) {
                 return;
             }
@@ -210,11 +226,13 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            MainActivity2 activity = activityWeakReference.get();
+            HomeActivity activity = activityWeakReference.get();
             if (activity == null || activity.isFinishing()) {
                 return;
             }
-            Toast.makeText(MainActivity2.this, nowActivity, Toast.LENGTH_SHORT).show();
+            ContentActivity.lottieAnimationView.setVisibility(View.VISIBLE);
+            ContentActivity.mRecyclerView.setVisibility(View.INVISIBLE);
+            Toast.makeText(HomeActivity.this, nowActivity, Toast.LENGTH_SHORT).show();
         }
     }
 }

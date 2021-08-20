@@ -1,4 +1,4 @@
-package com.methleshkoshle.karmathfinal;
+package com.methleshkoshle.karmathfinal.constant;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

@@ -1,4 +1,4 @@
-package com.methleshkoshle.karmathfinal;
+package com.methleshkoshle.karmathfinal.pages;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,12 +15,15 @@ import android.content.Intent;
 
 import android.os.Bundle;
 
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.methleshkoshle.karmathfinal.constant.Conditionals;
+import com.methleshkoshle.karmathfinal.constant.Constant;
 import com.methleshkoshle.karmathfinal.R;
+import com.methleshkoshle.karmathfinal.adapter.SongAdapter;
+import com.methleshkoshle.karmathfinal.model.Song;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -32,61 +35,31 @@ import java.util.ArrayList;
 
 public class SongActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
-    private ExampleSongAdapter mAdapter;
-//    private RecyclerView.LayoutManager mLayoutManager;
+    private SongAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private TextView mContent;
-
-    private ImageButton copyButton;
-    private ImageButton shareButton;
 
     private ClipboardManager myClipboard;
     private ClipData myClip;
 
     public static String text = null;
 
-    public static final String FILE_NAME="Song.txt";
-    public static final String TempSongFile="SongTemp.txt";
-    //    public static final String sourceURL = "https://drive.google.com/uc?export=download&id=1ZLUs31rvs5mXpmBy8YaxIA0AYLfzXstH";
-    public static final String sourceURL = "https://drive.google.com/uc?export=download&id=1NNferlDkfEJ9Q1zBgkQpFwSVzBO4Y5lb";
-    public static boolean isDigit(char c) {
-        return (c >= '0' && c <= '9');
-    }
-    public static boolean lineBreak(char c){
-        return (c == '।' || c == ',' || c == '|' || c == '.' || c == '?');
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song);
-//        if(isInternetWorking()) {
-//            // DoInBackground Thread
-//            startAsyncTaskSong();
-//            Toast.makeText(SongActivity.this, "Internet found!", Toast.LENGTH_SHORT).show();
-//        }
-//        else{
-//            Toast.makeText(SongActivity.this, "Please connect to Internet and try again!", Toast.LENGTH_SHORT).show();
-//        }
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Trying to load data from the web wish me luck...
         final ArrayList<Integer> oldSongID = new ArrayList<>();
-//        final ArrayList<Integer> songID = new ArrayList<>();
-
-//        final ArrayList<String> loadedFromWeb = new ArrayList<>();
         final ArrayList<String> loadedFromStorage = new ArrayList<>();
-
-//        final ArrayList<String> categoryWeb = new ArrayList<>();
         final ArrayList<String> categoryLocal = new ArrayList<>();
-
         final ArrayList<Boolean> switchStates = new ArrayList<>();
 
-        // Load local songs
         FileInputStream fis = null;
         String text;
         try {
-            fis = openFileInput(FILE_NAME);
+            fis = openFileInput(Constant.songFileName);
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
@@ -98,16 +71,16 @@ public class SongActivity extends AppCompatActivity {
             int n= text.length(), i = 0;
             while(i<n){
                 char c=text.charAt(i);
-                if(isDigit(c)){
+                if(Conditionals.isDigit(c)){
                     line = new StringBuilder();
                     int j=i;
-                    while (isDigit(text.charAt(j))) {
+                    while (Conditionals.isDigit(text.charAt(j))) {
                         line.append(text.charAt(j));
                         j++;
                     }
-                    while (!isDigit(text.charAt(j))){
+                    while (!Conditionals.isDigit(text.charAt(j))){
                         line.append(text.charAt(j));
-                        if(lineBreak(text.charAt(j)))
+                        if(Conditionals.lineBreak(text.charAt(j)))
                             line.append("\n");
                         j++;
                         if(j==n)break;
@@ -144,7 +117,7 @@ public class SongActivity extends AppCompatActivity {
         // Fetch New File Here
         fis = null;
         try {
-            fis = openFileInput(TempSongFile);
+            fis = openFileInput(Constant.tempSongFile);
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
@@ -156,16 +129,16 @@ public class SongActivity extends AppCompatActivity {
             int n= text.length(), i=0;
             while(i<n){
                 char c=text.charAt(i);
-                if(isDigit(c)){
+                if(Conditionals.isDigit(c)){
                     line = new StringBuilder();
                     int j=i;
-                    while (isDigit(text.charAt(j))) {
+                    while (Conditionals.isDigit(text.charAt(j))) {
                         line.append(text.charAt(j));
                         j++;
                     }
-                    while (!isDigit(text.charAt(j))){
+                    while (!Conditionals.isDigit(text.charAt(j))){
                         line.append(text.charAt(j));
-                        if(lineBreak(text.charAt(j)))
+                        if(Conditionals.lineBreak(text.charAt(j)))
                             line.append("\n");
                         j++;
                         if(j==n)break;
@@ -173,16 +146,10 @@ public class SongActivity extends AppCompatActivity {
                     String tmp=line.toString();
                     String [] arr = tmp.split("_", 4);
                     int num=Integer.parseInt(arr[0]);
-//                    Toast.makeText(SongActivity.this, tmp, Toast.LENGTH_SHORT).show();
                     if(!oldSongID.contains(num)) {
                         oldSongID.add(num);
-//                        songID.add(num);
-
-//                        loadedFromWeb.add(arr[3]);
                         loadedFromStorage.add(arr[3]);
-//                        categoryWeb.add(arr[2]);
                         categoryLocal.add(arr[2]);
-
                         switchStates.add(false);
                     }
                     i=j;
@@ -202,53 +169,12 @@ public class SongActivity extends AppCompatActivity {
             }
         }
 
-//        int N=switchStates.size(), ContentLength=oldSongID.size();
-//        for(int i=0; i<ContentLength-N; i++){
-//            switchStates.add(false);
-//        }
-//        String s = switchStates.size() + " " + loadedFromStorage.size();
-//        Context context = getApplicationContext();
-//        int duration = Toast.LENGTH_SHORT;
-//
-//        Toast toast = Toast.makeText(context, s, duration);
-//        toast.show();
-
-        final ArrayList<ExampleSong> mExampleSongList = new ArrayList<>();
+        final ArrayList<Song> mSongList = new ArrayList<>();
         int n=oldSongID.size();
         for(int i=0; i<n; i++) {
-            switch (categoryLocal.get(i)) {
-                case "Agyat":
-                    mExampleSongList.add(new ExampleSong(R.drawable.ic_agyat, loadedFromStorage.get(i), switchStates.get(i)));
-                    break;
-                case "Bhagwan":
-                    mExampleSongList.add(new ExampleSong(R.drawable.ic_bhagwan, loadedFromStorage.get(i), switchStates.get(i)));
-                    break;
-                case "Dard":
-                    mExampleSongList.add(new ExampleSong(R.drawable.ic_dard, loadedFromStorage.get(i), switchStates.get(i)));
-                    break;
-                case "Dosti":
-                    mExampleSongList.add(new ExampleSong(R.drawable.ic_dosti, loadedFromStorage.get(i), switchStates.get(i)));
-                    break;
-                case "Guru":
-                    mExampleSongList.add(new ExampleSong(R.drawable.ic_guru, loadedFromStorage.get(i), switchStates.get(i)));
-                    break;
-                case "Lagan":
-                    mExampleSongList.add(new ExampleSong(R.drawable.ic_lagan, loadedFromStorage.get(i), switchStates.get(i)));
-                    break;
-                case "Pyaar":
-                    mExampleSongList.add(new ExampleSong(R.drawable.ic_prema, loadedFromStorage.get(i), switchStates.get(i)));
-                    break;
-                case "Prerna":
-                    mExampleSongList.add(new ExampleSong(R.drawable.ic_prerna, loadedFromStorage.get(i), switchStates.get(i)));
-                    break;
-                case "Tyag":
-                    mExampleSongList.add(new ExampleSong(R.drawable.ic_tyag, loadedFromStorage.get(i), switchStates.get(i)));
-                    break;
-            }
+            int index = Constant.contentIndex.get(categoryLocal.get(i));
+            mSongList.add(new Song(Constant.imageResource[index], loadedFromStorage.get(i), switchStates.get(i)));
         }
-//        mExampleSongList.add(new ExampleSong(R.drawable.ic_agyat, "Junk Data one", switchStates.get(0)));
-//        mExampleSongList.add(new ExampleSong(R.drawable.ic_prema, "Junk Data two", switchStates.get(1)));
-//        mExampleSongList.add(new ExampleSong(R.drawable.ic_guru, "Junk Data three", switchStates.get(2)));
 
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
@@ -257,7 +183,7 @@ public class SongActivity extends AppCompatActivity {
 
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
-        mAdapter = new ExampleSongAdapter(mExampleSongList);
+        mAdapter = new SongAdapter(mSongList);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
@@ -265,14 +191,14 @@ public class SongActivity extends AppCompatActivity {
         myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         mContent = findViewById(R.id.SongView);
 
-        mAdapter.setOnItemClickListener(new ExampleSongAdapter.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new SongAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
 
             }
             @Override
             public void onCopyClick(int position) {
-                String text = mExampleSongList.get(position).getContent();
+                String text = mSongList.get(position).getContent();
                 myClip = ClipData.newPlainText("text", text);
                 myClipboard.setPrimaryClip(myClip);
 
@@ -290,9 +216,8 @@ public class SongActivity extends AppCompatActivity {
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     shareIntent.setType("text/plain");
                     shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
-                    String shareMessage;//\nLet me recommend you this application:\n\n";
-//                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID +"\n\n";
-                    shareMessage = mExampleSongList.get(position).getContent() +"\n\n";
+                    String shareMessage;
+                    shareMessage = mSongList.get(position).getContent() +"\n\n";
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                     startActivity(Intent.createChooser(shareIntent, "choose one"));
                 } catch(Exception e) {
@@ -335,7 +260,7 @@ public class SongActivity extends AppCompatActivity {
             void load() {
                 FileOutputStream fos = null;
                 try {
-                    fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
+                    fos = openFileOutput(Constant.songFileName, MODE_PRIVATE);
                     String text;
 
                     int n = loadedFromStorage.size();

@@ -1,4 +1,4 @@
-package com.methleshkoshle.karmathfinal;
+package com.methleshkoshle.karmathfinal.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +10,12 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.methleshkoshle.karmathfinal.R;
+import com.methleshkoshle.karmathfinal.model.Item;
 
 import java.util.ArrayList;
 
-public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
-    private ArrayList<ExampleItem> mExampleList;
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ExampleViewHolder> {
+    private ArrayList<Item> mExampleList;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener{
@@ -49,7 +50,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
             });
         }
     }
-    public ExampleAdapter(ArrayList<ExampleItem> exampleList) {
+    public ItemAdapter(ArrayList<Item> exampleList) {
         mExampleList = exampleList;
     }
     @Override
@@ -60,7 +61,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
     }
     @Override
     public void onBindViewHolder(ExampleViewHolder holder, int position) {
-        ExampleItem currentItem = mExampleList.get(position);
+        Item currentItem = mExampleList.get(position);
         holder.mImageView.setImageResource(currentItem.getImageResource());
         holder.mTextView1.setText(currentItem.getText1());
         holder.mTextView2.setText(currentItem.getText2());

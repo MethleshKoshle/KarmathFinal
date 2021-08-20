@@ -1,4 +1,4 @@
-package com.methleshkoshle.karmathfinal;
+package com.methleshkoshle.karmathfinal.feedback;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,24 +16,6 @@ public class AboutmeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_aboutme);
 
     }
-
-//    View imgview1 = findViewById(R.id.facebookView);
-//    View imgview2 = findViewById(R.id.instagramView);
-//    View imgview3 = findViewById(R.id.linkedinView);
-//    View imgview4 = findViewById(R.id.githubView);
-//
-//    public void facebookWebOpen() {
-//
-//    }
-//    public void instagramWebOpen() {
-//
-//    }
-//    public void linkedinWebOpen() {
-//
-//    }
-//    public void githubWebOpen() {
-//
-//    }
 
     public void showLinkedin(View view) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/methlesh-koshle-208a64145/"));

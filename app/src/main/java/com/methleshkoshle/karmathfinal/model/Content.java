@@ -1,11 +1,11 @@
-package com.methleshkoshle.karmathfinal;
+package com.methleshkoshle.karmathfinal.model;
 
-public class ExampleContent {
+public class Content {
     private int mImageResource;
     private String mContent;
     private Boolean mFavorite;
 
-    public  ExampleContent(int imageResource, String content, Boolean state){
+    public Content(int imageResource, String content, Boolean state){
         mImageResource=imageResource;
         mContent=content;
         mFavorite=state;

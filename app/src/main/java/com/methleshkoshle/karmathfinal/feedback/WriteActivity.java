@@ -1,4 +1,4 @@
-package com.methleshkoshle.karmathfinal;
+package com.methleshkoshle.karmathfinal.feedback;
 
 import androidx.appcompat.app.AppCompatActivity;
 
