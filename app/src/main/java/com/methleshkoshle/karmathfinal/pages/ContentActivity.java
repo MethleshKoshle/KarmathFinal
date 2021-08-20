@@ -1,9 +1,4 @@
-package com.methleshkoshle.karmathfinal;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.methleshkoshle.karmathfinal.pages;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -13,18 +8,29 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.LayoutRes;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.methleshkoshle.karmathfinal.ExampleContent;
+import com.methleshkoshle.karmathfinal.ExampleContentAdapter;
 import com.methleshkoshle.karmathfinal.R;
+import com.methleshkoshle.karmathfinal.helper.FileIoHelper;
 
 import java.util.ArrayList;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+public class ContentActivity extends AppCompatActivity {
 
-public class GuruActivity extends AppCompatActivity {
+    public static String name;
+    public static String fileName;
+    public static String tempFileName;
+    public static int imageResource;
+    @StringRes
+    public static int labelResID;
+
     private RecyclerView mRecyclerView;
     private ExampleContentAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -33,13 +39,11 @@ public class GuruActivity extends AppCompatActivity {
     private ClipboardManager myClipboard;
     private ClipData myClip;
 
-    public static final String FILE_NAME = "Guru.txt";
-    public static final String TempGuruFile="GuruTemp.txt";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guru);
+        setTitle(labelResID);
+        setContentView(R.layout.activity_content);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -48,7 +52,7 @@ public class GuruActivity extends AppCompatActivity {
 
         final FileIoHelper currentFileIoHelper = new FileIoHelper();
 
-        currentFileIoHelper.init(context, "Guru", FILE_NAME, TempGuruFile);
+        currentFileIoHelper.init(context, name, fileName, tempFileName);
 
         currentFileIoHelper.loadLocalContent();
         currentFileIoHelper.fetchNewFile();
@@ -62,7 +66,7 @@ public class GuruActivity extends AppCompatActivity {
         int n=loadedFromStorage.size();
 
         for(int i=0; i<n; i++){
-            mExampleContentList.add(new ExampleContent(R.drawable.ic_guru, loadedFromStorage.get(i), switchStates.get(i)));
+            mExampleContentList.add(new ExampleContent(imageResource, loadedFromStorage.get(i), switchStates.get(i)));
         }
 
         mRecyclerView = findViewById(R.id.recyclerView);
@@ -82,7 +86,6 @@ public class GuruActivity extends AppCompatActivity {
             public void onItemClick(int position) {
 
             }
-
             @Override
             public void onCopyClick(int position) {
                 String text = mExampleContentList.get(position).getContent();
@@ -103,12 +106,11 @@ public class GuruActivity extends AppCompatActivity {
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     shareIntent.setType("text/plain");
                     shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
-                    String shareMessage;//\nLet me recommend you this application:\n\n";
-//                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID +"\n\n";
-                    shareMessage = mExampleContentList.get(position).getContent() + "\n\n";
+                    String shareMessage;
+                    shareMessage = mExampleContentList.get(position).getContent() +"\n\n";
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                     startActivity(Intent.createChooser(shareIntent, "choose one"));
-                } catch (Exception e) {
+                } catch(Exception e) {
                     //e.toString();
                 }
                 Context context = getApplicationContext();

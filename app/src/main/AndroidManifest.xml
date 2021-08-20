@@ -30,56 +30,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="nosensor"/>
         <activity
-            android:name="com.methleshkoshle.karmathfinal.AgyatActivity"
-            android:label="अज्ञात"
-            android:parentActivityName="com.methleshkoshle.karmathfinal.MainActivity2"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor"/>
-        <activity
-            android:name="com.methleshkoshle.karmathfinal.BhagwanActivity"
-            android:label="भगवान"
-            android:parentActivityName="com.methleshkoshle.karmathfinal.MainActivity2"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor"/>
-        <activity
-            android:name="com.methleshkoshle.karmathfinal.DardActivity"
-            android:label="दर्द"
-            android:parentActivityName="com.methleshkoshle.karmathfinal.MainActivity2"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor"/>
-        <activity
-            android:name="com.methleshkoshle.karmathfinal.DostiActivity"
-            android:label="दोस्ती"
-            android:parentActivityName="com.methleshkoshle.karmathfinal.MainActivity2"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor"/>
-        <activity
-            android:name="com.methleshkoshle.karmathfinal.GuruActivity"
-            android:label="गुरु"
-            android:parentActivityName="com.methleshkoshle.karmathfinal.MainActivity2"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor"/>
-        <activity
-            android:name="com.methleshkoshle.karmathfinal.LaganActivity"
-            android:label="लगन"
-            android:parentActivityName="com.methleshkoshle.karmathfinal.MainActivity2"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor"/>
-        <activity
-            android:name="com.methleshkoshle.karmathfinal.PrernaActivity"
-            android:label="प्रेरणा"
-            android:parentActivityName="com.methleshkoshle.karmathfinal.MainActivity2"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor"/>
-        <activity
-            android:name="com.methleshkoshle.karmathfinal.PyaarActivity"
-            android:label="प्रेम"
-            android:parentActivityName="com.methleshkoshle.karmathfinal.MainActivity2"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor"/>
-        <activity
-            android:name="com.methleshkoshle.karmathfinal.TyagActivity"
-            android:label="त्याग"
+            android:name="com.methleshkoshle.karmathfinal.pages.ContentActivity"
             android:parentActivityName="com.methleshkoshle.karmathfinal.MainActivity2"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="nosensor"/>

@@ -35,4 +35,13 @@
     <string name="write_a_review">Write a review</string>
     <string name="space" />
     <string name="todo">TODO</string>
+    <string name="AgyatHindi">अज्ञात</string>
+    <string name="BhagwanHindi">भगवान</string>
+    <string name="DardHindi">दर्द</string>
+    <string name="DostiHindi">दोस्ती</string>
+    <string name="GuruHindi">गुरु</string>
+    <string name="LaganHindi">लगन</string>
+    <string name="PrematHindi">प्रेम</string>
+    <string name="PrernaHindi">प्रेरणा</string>
+    <string name="TyagHindi">त्याग</string>
 </resources>

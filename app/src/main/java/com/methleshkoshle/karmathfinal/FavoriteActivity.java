@@ -78,62 +78,12 @@ public class FavoriteActivity extends AppCompatActivity {
                     String [] arr=tmp.split("_", 3);
                     // Insert
                     if(arr.length>=3) {
-                        switch (arr[1]) {
-                            case "Agyat":
-                                isEmpty=false;
-                                ExampleContent temperoryContent = new ExampleContent(R.drawable.ic_agyat, arr[2], true);
-                                if (!mExampleContentList.contains(temperoryContent))
-                                    mExampleContentList.add(temperoryContent);
-                                break;
-                            case "Bhagwan":
-                                isEmpty=false;
-                                temperoryContent = new ExampleContent(R.drawable.ic_bhagwan, arr[2], true);
-                                if (!mExampleContentList.contains(temperoryContent))
-                                    mExampleContentList.add(temperoryContent);
-                                break;
-                            case "Dard":
-                                isEmpty=false;
-                                temperoryContent = new ExampleContent(R.drawable.ic_dard, arr[2], true);
-                                if (!mExampleContentList.contains(temperoryContent))
-                                    mExampleContentList.add(temperoryContent);
-                                break;
-                            case "Dosti":
-                                isEmpty=false;
-                                temperoryContent = new ExampleContent(R.drawable.ic_dosti, arr[2], true);
-                                if (!mExampleContentList.contains(temperoryContent))
-                                    mExampleContentList.add(temperoryContent);
-                                break;
-                            case "Guru":
-                                isEmpty=false;
-                                temperoryContent = new ExampleContent(R.drawable.ic_guru, arr[2], true);
-                                if (!mExampleContentList.contains(temperoryContent))
-                                    mExampleContentList.add(temperoryContent);
-                                break;
-                            case "Lagan":
-                                isEmpty=false;
-                                temperoryContent = new ExampleContent(R.drawable.ic_lagan, arr[2], true);
-                                if (!mExampleContentList.contains(temperoryContent))
-                                    mExampleContentList.add(temperoryContent);
-                                break;
-                            case "Prerna":
-                                isEmpty=false;
-                                temperoryContent = new ExampleContent(R.drawable.ic_prerna, arr[2], true);
-                                if (!mExampleContentList.contains(temperoryContent))
-                                    mExampleContentList.add(temperoryContent);
-                                break;
-                            case "Pyaar":
-                                isEmpty=false;
-                                temperoryContent = new ExampleContent(R.drawable.ic_prema, arr[2], true);
-                                if (!mExampleContentList.contains(temperoryContent))
-                                    mExampleContentList.add(temperoryContent);
-                                break;
-                            case "Tyag":
-                                isEmpty=false;
-                                temperoryContent = new ExampleContent(R.drawable.ic_tyag, arr[2], true);
-                                if (!mExampleContentList.contains(temperoryContent))
-                                    mExampleContentList.add(temperoryContent);
-                                break;
-                        }
+                        int index = Constant.contentIndex.get(arr[1]);
+                        isEmpty=false;
+                        ExampleContent temporaryContent = new ExampleContent(
+                                Constant.imageResource[index], arr[2], true);
+                        if (!mExampleContentList.contains(temporaryContent))
+                            mExampleContentList.add(temporaryContent);
                     }
                 }
             }
