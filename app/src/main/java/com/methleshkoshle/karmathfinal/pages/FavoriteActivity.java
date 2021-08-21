@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.methleshkoshle.karmathfinal.constant.Constant;
 import com.methleshkoshle.karmathfinal.R;
 import com.methleshkoshle.karmathfinal.adapter.ContentAdapter;
-import com.methleshkoshle.karmathfinal.model.Content;
+import com.methleshkoshle.karmathfinal.model.ContentCard;
 
 import java.util.ArrayList;
 
@@ -48,7 +48,7 @@ public class FavoriteActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Boolean isEmpty=true;
-        final ArrayList<Content> mContentList = new ArrayList<>();
+        final ArrayList<ContentCard> mContentCardList = new ArrayList<>();
         FileInputStream fis = null;
         try {
             fis = openFileInput(FILE_NAME);
@@ -83,10 +83,10 @@ public class FavoriteActivity extends AppCompatActivity {
                     if(arr.length>=3) {
                         int index = Constant.contentIndex.get(arr[1]);
                         isEmpty=false;
-                        Content temporaryContent = new Content(
+                        ContentCard temporaryContentCard = new ContentCard(
                                 Constant.imageResource[index], arr[2], true);
-                        if (!mContentList.contains(temporaryContent))
-                            mContentList.add(temporaryContent);
+                        if (!mContentCardList.contains(temporaryContentCard))
+                            mContentCardList.add(temporaryContentCard);
                     }
                 }
             }
@@ -117,7 +117,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
         mLayoutManager = new LinearLayoutManager(this);
 
-        mAdapter = new ContentAdapter(mContentList);
+        mAdapter = new ContentAdapter(mContentCardList);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -130,7 +130,7 @@ public class FavoriteActivity extends AppCompatActivity {
             }
             @Override
             public void onCopyClick(int position) {
-                text = mContentList.get(position).getContent();
+                text = mContentCardList.get(position).getContent();
                 myClip = ClipData.newPlainText("text", text);
                 myClipboard.setPrimaryClip(myClip);
 
@@ -150,7 +150,7 @@ public class FavoriteActivity extends AppCompatActivity {
                     shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
                     String shareMessage;//\nLet me recommend you this application:\n\n";
 //                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID +"\n\n";
-                    shareMessage = mContentList.get(position).getContent() +"\n\n";
+                    shareMessage = mContentCardList.get(position).getContent() +"\n\n";
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                     startActivity(Intent.createChooser(shareIntent, "choose one"));
                 } catch(Exception e) {

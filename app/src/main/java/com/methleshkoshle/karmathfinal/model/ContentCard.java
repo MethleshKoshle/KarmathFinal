@@ -1,11 +1,11 @@
 package com.methleshkoshle.karmathfinal.model;
 
-public class Content {
+public class ContentCard {
     private int mImageResource;
     private String mContent;
     private Boolean mFavorite;
 
-    public Content(int imageResource, String content, Boolean state){
+    public ContentCard(int imageResource, String content, Boolean state){
         mImageResource=imageResource;
         mContent=content;
         mFavorite=state;

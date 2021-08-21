@@ -6,9 +6,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/aboutme_background_1"
+    android:background="@android:color/darker_gray"
     android:id="@+id/dosti_layout"
     tools:context="com.methleshkoshle.karmathfinal.pages.ContentActivity">
+
+<!--    android:background="@drawable/aboutme_background_1"-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,23 +29,31 @@
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-        <com.airbnb.lottie.LottieAnimationView
-            android:visibility="invisible"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/animation"
-            app:lottie_loop="true"
-            app:lottie_fileName="loader-animation.json"
-            app:lottie_autoPlay="true" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:visibility="visible"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray"
-            android:padding="4dp"
-            android:scrollbars="vertical" />
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
+                android:padding="4dp"
+                android:scrollbars="vertical"
+                android:visibility="visible" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="loader-animation.json"
+                app:lottie_loop="true" />
+        </FrameLayout>
+
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

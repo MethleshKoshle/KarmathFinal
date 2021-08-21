@@ -7,17 +7,14 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-// import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.methleshkoshle.karmathfinal.R;
-import com.methleshkoshle.karmathfinal.model.Song;
+import com.methleshkoshle.karmathfinal.model.ContentCard;
 
 import java.util.ArrayList;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ExampleSongViewHolder> {
-    private ArrayList<Song> mSongList;
+    private ArrayList<ContentCard> mSongList;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
@@ -97,7 +94,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ExampleSongVie
             });
         }
     }
-    public SongAdapter(ArrayList<Song> exampleList) {
+    public SongAdapter(ArrayList<ContentCard> exampleList) {
         mSongList = exampleList;
     }
     @Override
@@ -108,7 +105,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ExampleSongVie
     }
     @Override
     public void onBindViewHolder(ExampleSongViewHolder holder, int position) {
-        Song currentItem = mSongList.get(position);
+        ContentCard currentItem = mSongList.get(position);
         holder.mImageView.setImageResource(currentItem.getImageResource());
         holder.mContentView.setText(currentItem.getContent());
         holder.mAddFavorite.setChecked(currentItem.getState());

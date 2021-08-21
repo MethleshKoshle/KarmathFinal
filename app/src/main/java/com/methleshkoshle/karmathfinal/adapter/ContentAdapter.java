@@ -12,12 +12,12 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.methleshkoshle.karmathfinal.R;
-import com.methleshkoshle.karmathfinal.model.Content;
+import com.methleshkoshle.karmathfinal.model.ContentCard;
 
 import java.util.ArrayList;
 
 public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ExampleContentViewHolder> {
-    private ArrayList<Content> mContentList;
+    private ArrayList<ContentCard> mContentCardList;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
@@ -97,8 +97,8 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ExampleC
             });
         }
     }
-    public ContentAdapter(ArrayList<Content> exampleList) {
-        mContentList = exampleList;
+    public ContentAdapter(ArrayList<ContentCard> exampleList) {
+        mContentCardList = exampleList;
     }
     @Override
     public ExampleContentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -108,13 +108,13 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ExampleC
     }
     @Override
     public void onBindViewHolder(ExampleContentViewHolder holder, int position) {
-        Content currentItem = mContentList.get(position);
+        ContentCard currentItem = mContentCardList.get(position);
         holder.mImageView.setImageResource(currentItem.getImageResource());
         holder.mContentView.setText(currentItem.getContent());
         holder.mAddFavorite.setChecked(currentItem.getState());
     }
     @Override
     public int getItemCount() {
-        return mContentList.size();
+        return mContentCardList.size();
     }
 }

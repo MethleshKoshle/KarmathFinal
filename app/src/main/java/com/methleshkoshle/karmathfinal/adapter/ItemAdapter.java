@@ -10,12 +10,12 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.methleshkoshle.karmathfinal.R;
-import com.methleshkoshle.karmathfinal.model.Item;
+import com.methleshkoshle.karmathfinal.model.ItemRow;
 
 import java.util.ArrayList;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ExampleViewHolder> {
-    private ArrayList<Item> mExampleList;
+    private ArrayList<ItemRow> mExampleList;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener{
@@ -50,7 +50,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ExampleViewHol
             });
         }
     }
-    public ItemAdapter(ArrayList<Item> exampleList) {
+    public ItemAdapter(ArrayList<ItemRow> exampleList) {
         mExampleList = exampleList;
     }
     @Override
@@ -61,10 +61,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ExampleViewHol
     }
     @Override
     public void onBindViewHolder(ExampleViewHolder holder, int position) {
-        Item currentItem = mExampleList.get(position);
-        holder.mImageView.setImageResource(currentItem.getImageResource());
-        holder.mTextView1.setText(currentItem.getText1());
-        holder.mTextView2.setText(currentItem.getText2());
+        ItemRow currentItemRow = mExampleList.get(position);
+        holder.mImageView.setImageResource(currentItemRow.getImageResource());
+        holder.mTextView1.setText(currentItemRow.getText1());
+        holder.mTextView2.setText(currentItemRow.getText2());
     }
     @Override
     public int getItemCount() {

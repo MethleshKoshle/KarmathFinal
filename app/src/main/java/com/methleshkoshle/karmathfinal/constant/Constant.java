@@ -22,6 +22,10 @@ import java.util.Map;
 
 public class Constant {
 
+    public static Integer CATEGORY_COUNT = 9;
+
+    public static final String contentUrl = "http://10.0.2.2:8090/content/";
+
     public static final String [] hindiName = {
             "अज्ञात", "भगवान", "दर्द", "दोस्ती",
             "गुरु", "लगन", "प्रेम", "प्रेरणा", "त्याग"

@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.methleshkoshle.karmathfinal.R;
 import com.methleshkoshle.karmathfinal.adapter.ContentAdapter;
-import com.methleshkoshle.karmathfinal.model.Content;
+import com.methleshkoshle.karmathfinal.model.ContentCard;
 
 import java.util.ArrayList;
 
@@ -38,17 +38,17 @@ public class TwolinerActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final ArrayList<Content> mContentList = new ArrayList<>();
-        mContentList.add(new Content(R.drawable.ic_agyat, "Song Agyat Line 1", false));
-        mContentList.add(new Content(R.drawable.ic_prema, "Song Pyaar Line 2", false));
-        mContentList.add(new Content(R.drawable.ic_guru, "Song Guru Line 3", false));
+        final ArrayList<ContentCard> mContentCardList = new ArrayList<>();
+        mContentCardList.add(new ContentCard(R.drawable.ic_agyat, "Song Agyat Line 1", false));
+        mContentCardList.add(new ContentCard(R.drawable.ic_prema, "Song Pyaar Line 2", false));
+        mContentCardList.add(new ContentCard(R.drawable.ic_guru, "Song Guru Line 3", false));
 
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
 
         mLayoutManager = new LinearLayoutManager(this);
 
-        mAdapter = new ContentAdapter(mContentList);
+        mAdapter = new ContentAdapter(mContentCardList);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -62,7 +62,7 @@ public class TwolinerActivity extends AppCompatActivity {
             }
             @Override
             public void onCopyClick(int position) {
-                text = mContentList.get(position).getContent();
+                text = mContentCardList.get(position).getContent();
                 myClip = ClipData.newPlainText("text", text);
                 myClipboard.setPrimaryClip(myClip);
 
@@ -81,7 +81,7 @@ public class TwolinerActivity extends AppCompatActivity {
                     shareIntent.setType("text/plain");
                     shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
                     String shareMessage;
-                    shareMessage = mContentList.get(position).getContent() +"\n\n";
+                    shareMessage = mContentCardList.get(position).getContent() +"\n\n";
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                     startActivity(Intent.createChooser(shareIntent, "choose one"));
                 } catch(Exception e) {

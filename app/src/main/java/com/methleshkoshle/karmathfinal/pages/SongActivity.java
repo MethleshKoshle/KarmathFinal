@@ -23,7 +23,7 @@ import com.methleshkoshle.karmathfinal.constant.Conditionals;
 import com.methleshkoshle.karmathfinal.constant.Constant;
 import com.methleshkoshle.karmathfinal.R;
 import com.methleshkoshle.karmathfinal.adapter.SongAdapter;
-import com.methleshkoshle.karmathfinal.model.Song;
+import com.methleshkoshle.karmathfinal.model.ContentCard;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -169,11 +169,11 @@ public class SongActivity extends AppCompatActivity {
             }
         }
 
-        final ArrayList<Song> mSongList = new ArrayList<>();
+        final ArrayList<ContentCard> mSongList = new ArrayList<>();
         int n=oldSongID.size();
         for(int i=0; i<n; i++) {
             int index = Constant.contentIndex.get(categoryLocal.get(i));
-            mSongList.add(new Song(Constant.imageResource[index], loadedFromStorage.get(i), switchStates.get(i)));
+            mSongList.add(new ContentCard(Constant.imageResource[index], loadedFromStorage.get(i), switchStates.get(i)));
         }
 
         mRecyclerView = findViewById(R.id.recyclerView);
