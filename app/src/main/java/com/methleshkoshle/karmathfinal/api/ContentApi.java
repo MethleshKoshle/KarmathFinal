@@ -15,8 +15,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.methleshkoshle.karmathfinal.constant.Constant;
-import com.methleshkoshle.karmathfinal.model.ContentText;
+import com.methleshkoshle.karmathfinal.model.ContentText.ContentTextList;
 import com.methleshkoshle.karmathfinal.pages.ContentActivity;
+import com.methleshkoshle.karmathfinal.parser.ContentParser;
 import com.methleshkoshle.karmathfinal.response.ContentResponse;
 
 import org.json.JSONException;
@@ -27,8 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ContentApi{
-    public static boolean contentFetched;
-
     public static List<Map> contentTexts = new ArrayList<>();
 
     public static void getContent(final Activity activity, Context context, final String categoryName, final String type) {
@@ -53,9 +52,10 @@ public class ContentApi{
                     else
                         contentTexts =  (List<Map>) category.get("content");
 
+                    ContentTextList contentTextList = ContentParser.getContentTextList(contentTexts);
+
                     Log.i("VOLLEY", text);
-                    contentFetched=true;
-                    activity.recreate();
+                    ContentActivity.contentViewModel.getCurrentContent().setValue(contentTextList);
                 }
             }, new Response.ErrorListener() {
                 @Override

@@ -1,6 +1,8 @@
 package com.methleshkoshle.karmathfinal.constant;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.view.View;
 
 import com.methleshkoshle.karmathfinal.R;
 
@@ -90,6 +92,8 @@ public class Constant {
             R.string.PrematHindi, R.string.PrernaHindi, R.string.TyagHindi
     };
 
+    public static String ownerMailId = "miitbh1@gmail.com";
+
     public Intent shareApp(String shareMessage){
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
@@ -97,5 +101,11 @@ public class Constant {
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
         return shareIntent;
     }
+
+    public static String linkedInUrl = "https://www.linkedin.com/in/methlesh-koshle-208a64145/";
+    public static String gitHubUrl = "https://github.com/MethleshKoshle";
+    public static String instagramUrl = "https://www.instagram.com/methlesh_koshle/";
+    public static String facebookUrl = "https://www.facebook.com/methlesh.koshle";
+
 
 }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.methleshkoshle.karmathfinal.R;
+import com.methleshkoshle.karmathfinal.constant.Constant;
 
 public class AboutmeActivity extends AppCompatActivity {
     @Override
@@ -18,22 +19,22 @@ public class AboutmeActivity extends AppCompatActivity {
     }
 
     public void showLinkedin(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/methlesh-koshle-208a64145/"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constant.linkedInUrl));
         startActivity(browserIntent);
     }
 
     public void showGithub(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/MethleshKoshle"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constant.gitHubUrl));
         startActivity(browserIntent);
     }
 
     public void showInstagram(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/methlesh_koshle/"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constant.instagramUrl));
         startActivity(browserIntent);
     }
 
     public void showFacebook(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/methlesh.koshle"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constant.facebookUrl));
         startActivity(browserIntent);
     }
 }

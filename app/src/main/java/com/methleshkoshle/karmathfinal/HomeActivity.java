@@ -45,10 +45,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private static Context context;
 
-    public static String TempFile=null;
-    public static String nowUrl=null;
-    public static String nowActivity=null;
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item ) {
         switch (item.getItemId()){
@@ -135,7 +131,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 ContentActivity.tempFileName = Constant.tempFileName[position];
                 ContentActivity.imageResource = Constant.imageResource[position];
                 ContentActivity.labelResID = Constant.labelResID[position];
-                ContentApi.contentFetched = false;
                 if(!Conditionals.isInternetWorking(context)) {
                     Toast.makeText(HomeActivity.this, "Connect to Internet to load new content!", Toast.LENGTH_SHORT).show();
                 }

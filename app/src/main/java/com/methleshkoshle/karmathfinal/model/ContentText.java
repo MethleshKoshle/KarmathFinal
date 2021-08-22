@@ -5,5 +5,10 @@ import java.util.List;
 public class ContentText {
     public int id;
     public boolean favorite;
-    public List<Integer> content;
+    public String content;
+
+    public static class ContentTextList {
+        public List<ContentText> contentTextList;
+    }
 }
+

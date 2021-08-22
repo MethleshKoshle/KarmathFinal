@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.methleshkoshle.karmathfinal.R;
+import com.methleshkoshle.karmathfinal.constant.Constant;
 
 public class WriteActivity extends AppCompatActivity {
     private EditText mEditTextMessage;
@@ -28,7 +29,7 @@ public class WriteActivity extends AppCompatActivity {
     private void sendMail() {
         String message = mEditTextMessage.getText().toString();
         Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"miitbh1@gmail.com"});
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] {Constant.ownerMailId});
         intent.putExtra(Intent.EXTRA_SUBJECT, "About Karmath");
         intent.putExtra(Intent.EXTRA_TEXT, message);
         intent.setType("message/rfc822");
