@@ -1,10 +1,8 @@
 package com.methleshkoshle.karmathfinal.api;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.RequiresApi;
 import com.android.volley.Request;
@@ -15,7 +13,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.methleshkoshle.karmathfinal.constant.Constant;
-import com.methleshkoshle.karmathfinal.model.ContentText.ContentTextList;
+import com.methleshkoshle.karmathfinal.dao.ContentDao;
+import com.methleshkoshle.karmathfinal.database.CommonDatabase;
+import com.methleshkoshle.karmathfinal.model.Content;
+import com.methleshkoshle.karmathfinal.model.Content.ContentTextList;
 import com.methleshkoshle.karmathfinal.pages.ContentActivity;
 import com.methleshkoshle.karmathfinal.parser.ContentParser;
 import com.methleshkoshle.karmathfinal.response.ContentResponse;
@@ -30,10 +31,11 @@ import java.util.Map;
 public class ContentApi{
     public static List<Map> contentTexts = new ArrayList<>();
 
-    public static void getContent(final Activity activity, Context context, final String categoryName, final String type) {
+    public static void getContent(Context context, final String categoryName, final String type) {
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(context);
             JSONObject jsonBody = new JSONObject();
+            final ContentDao contentDao = CommonDatabase.db.contentDao();
             jsonBody.put("Title", "Android Volley Demo");
             jsonBody.put("Author", "BNK");
 
@@ -54,7 +56,18 @@ public class ContentApi{
 
                     ContentTextList contentTextList = ContentParser.getContentTextList(contentTexts);
 
-                    Log.i("VOLLEY", text);
+                    for(int i=0; i<contentTextList.contentList.size(); i++){
+                        Content content = contentTextList.contentList.get(i);
+                        content.category=categoryName;
+                        content.type=type;
+                        Content contentFromDB = contentDao.getById(content.id);
+                        if(contentFromDB == null){
+                            contentDao.insertAll(content);
+                        }
+                        else{
+                            contentTextList.contentList.set(i, contentFromDB);
+                        }
+                    }
                     ContentActivity.contentViewModel.getCurrentContent().setValue(contentTextList);
                 }
             }, new Response.ErrorListener() {

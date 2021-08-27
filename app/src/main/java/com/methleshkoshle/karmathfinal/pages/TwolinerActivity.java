@@ -39,7 +39,7 @@ public class TwolinerActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         final ArrayList<ContentCard> mContentCardList = new ArrayList<>();
-        mContentCardList.add(new ContentCard(R.drawable.ic_agyat, "Song Agyat Line 1", false));
+        mContentCardList.add(new ContentCard(R.drawable.ic_vishesh, "Song Vishesh Line 1", false));
         mContentCardList.add(new ContentCard(R.drawable.ic_prema, "Song Pyaar Line 2", false));
         mContentCardList.add(new ContentCard(R.drawable.ic_guru, "Song Guru Line 3", false));
 
@@ -48,7 +48,7 @@ public class TwolinerActivity extends AppCompatActivity {
 
         mLayoutManager = new LinearLayoutManager(this);
 
-        mAdapter = new ContentAdapter(mContentCardList);
+        mAdapter = new ContentAdapter(false, mContentCardList);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 

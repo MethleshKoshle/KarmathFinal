@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/vishesh"
+        android:icon="@drawable/ic_vishesh"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="Setting" />
+    <item
+        android:id="@+id/bhagwan"
+        android:icon="@drawable/ic_bhagwan"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="Setting" />
+    <item
+        android:id="@+id/dard"
+        android:icon="@drawable/ic_dard"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="Setting" />
+    <item
+        android:id="@+id/dosti"
+        android:icon="@drawable/ic_dosti"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="Setting" />
+    <item
+        android:id="@+id/guru"
+        android:icon="@drawable/ic_guru"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="Setting" />
+    <item
+        android:id="@+id/lagan"
+        android:icon="@drawable/ic_lagan"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="Setting" />
+    <item
+        android:id="@+id/prema"
+        android:icon="@drawable/ic_prema"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="Setting" />
+    <item
+        android:id="@+id/prerna"
+        android:icon="@drawable/ic_prerna"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="Setting" />
+    <item
+        android:id="@+id/tyag"
+        android:icon="@drawable/ic_tyag"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="Setting" />
+</menu>

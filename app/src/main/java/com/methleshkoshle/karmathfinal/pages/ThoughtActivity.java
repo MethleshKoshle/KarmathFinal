@@ -238,11 +238,6 @@ public class ThoughtActivity extends AppCompatActivity {
 //
             arr = arr[1].split("\n", 2);
             colorToday = arr[0];
-//            Context context = getApplicationContext();
-//            int duration = Toast.LENGTH_SHORT;
-//
-//            Toast toast = Toast.makeText(context, colorToday, duration);
-//            toast.show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

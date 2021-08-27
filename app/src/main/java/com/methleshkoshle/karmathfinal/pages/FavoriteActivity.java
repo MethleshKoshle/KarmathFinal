@@ -1,7 +1,10 @@
 package com.methleshkoshle.karmathfinal.pages;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,12 +13,20 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.methleshkoshle.karmathfinal.constant.Constant;
 import com.methleshkoshle.karmathfinal.R;
 import com.methleshkoshle.karmathfinal.adapter.ContentAdapter;
+import com.methleshkoshle.karmathfinal.dao.ContentDao;
+import com.methleshkoshle.karmathfinal.database.CommonDatabase;
+import com.methleshkoshle.karmathfinal.model.Content;
 import com.methleshkoshle.karmathfinal.model.ContentCard;
+import com.methleshkoshle.karmathfinal.model.ContentViewModel;
 
 import java.util.ArrayList;
 
@@ -24,20 +35,28 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class FavoriteActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ContentAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    public static LottieAnimationView lottieAnimationView;
+
     private ClipboardManager myClipboard;
     private ClipData myClip;
 
     private String text;
-    public static final String FILE_NAME = "Favorite.txt";
+    private ContentDao contentDao;
 
-    public static boolean isDigit(char c) {
-        return (c >= '0' && c <= '9');
+    public static ContentViewModel contentViewModel;
+    private ArrayList<ContentCard> mContentCardList;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.liked_menu, menu);
+        return true;
     }
 
     @Override
@@ -47,141 +66,112 @@ public class FavoriteActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Boolean isEmpty=true;
-        final ArrayList<ContentCard> mContentCardList = new ArrayList<>();
-        FileInputStream fis = null;
-        try {
-            fis = openFileInput(FILE_NAME);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            String text;
-            while ((text = br.readLine()) != null) {
-                sb.append(text);
-                sb.append("\n");
-            }
-            text=sb.toString();
 
-            StringBuilder line;
-            int n=text.length();
-            for(int i=0; i<n; i++){
-                char c= text.charAt(i);
-                // Check for starting of content
-                if(isDigit(c)){
-                    line = new StringBuilder();
-                    line.append(c);
-                    int j=i+1;
-                    if(j==n)break;
-                    while (!isDigit(text.charAt(j))){
-                        line.append(text.charAt(j));
-                        j++;
-                        if(j==n)break;
-                    }
-                    String tmp=line.toString();
-                    String [] arr=tmp.split("_", 3);
-                    // Insert
-                    if(arr.length>=3) {
-                        int index = Constant.contentIndex.get(arr[1]);
-                        isEmpty=false;
-                        ContentCard temporaryContentCard = new ContentCard(
-                                Constant.imageResource[index], arr[2], true);
-                        if (!mContentCardList.contains(temporaryContentCard))
-                            mContentCardList.add(temporaryContentCard);
-                    }
-                }
-            }
+        mContentCardList = new ArrayList<>();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        if(isEmpty){
-            Context context = getApplicationContext();
-            CharSequence text = "No Favorites Yet!";
-            int duration = Toast.LENGTH_SHORT;
+        contentDao = CommonDatabase.db.contentDao();
 
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-        }
+        lottieAnimationView = findViewById(R.id.animation);
+        lottieAnimationView.playAnimation();
+
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
 
         mLayoutManager = new LinearLayoutManager(this);
 
-        mAdapter = new ContentAdapter(mContentCardList);
+        contentViewModel = new ViewModelProvider(this).get(ContentViewModel.class);
+
+        final Observer<Content.ContentTextList> contentTextListObserver = new Observer<Content.ContentTextList>() {
+            @Override
+            public void onChanged(@Nullable final Content.ContentTextList contentTextList) {
+                mAdapter = new ContentAdapter(true, updateUI(contentTextList));
+
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                mRecyclerView.setAdapter(mAdapter);
+
+                myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+
+                mAdapter.setOnItemClickListener(new ContentAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+
+                    }
+                    @Override
+                    public void onCopyClick(int position) {
+                        text = contentTextList.contentList.get(position).content;
+                        myClip = ClipData.newPlainText("text", text);
+                        myClipboard.setPrimaryClip(myClip);
+
+                        Context context = getApplicationContext();
+                        CharSequence text = "Content Copied!";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
+
+                    @Override
+                    public void onShareClick(int position) {
+                        String shareMessage = contentTextList.contentList.get(position).content +"\n\n";
+                        Constant.shareContent(getApplicationContext(), shareMessage);
+                    }
+
+                    @Override
+                    public void onAddFavoriteClick(int position) {
+                        Context context = getApplicationContext();
+                        CharSequence text = "Already present!";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
+                    @Override
+                    public void onRemoveFavoriteClick(int position) {
+                        Content content = contentTextList.contentList.get(position);
+                        content.favorite = false;
+                        contentTextList.contentList.set(position, content);
+                        contentDao.insertAll(content);
+                    }
+                });
+                lottieAnimationView.setVisibility(View.INVISIBLE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                mAdapter.notifyDataSetChanged();
+            }
+        };
+
+        CommonDatabase.getFavorites("content");
+
+        contentViewModel.getCurrentContent().observe(this, contentTextListObserver);
+
+        lottieAnimationView.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
+
+        mAdapter = new ContentAdapter(true, mContentCardList);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
         myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+    }
 
-        mAdapter.setOnItemClickListener(new ContentAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
+    private ArrayList<ContentCard> updateUI(Content.ContentTextList contentTextList){
+        ArrayList<ContentCard> mContentCardList = new ArrayList<>();
+        for(Content content : contentTextList.contentList){
+            int contentIndex = Constant.contentIndex.get(content.category);
+            mContentCardList.add(
+                    new ContentCard(
+                            Constant.imageResource[contentIndex], content.content, content.favorite
+                    )
+            );
+        }
+        return mContentCardList;
+    }
 
-            }
-            @Override
-            public void onCopyClick(int position) {
-                text = mContentCardList.get(position).getContent();
-                myClip = ClipData.newPlainText("text", text);
-                myClipboard.setPrimaryClip(myClip);
+    public void showEmptyMessage(){
+        Context context = getApplicationContext();
+        CharSequence text = "No Favorites Yet!";
+        int duration = Toast.LENGTH_SHORT;
 
-                Context context = getApplicationContext();
-                CharSequence text = "Content Copied!";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-            }
-
-            @Override
-            public void onShareClick(int position) {
-                try {
-                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setType("text/plain");
-                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
-                    String shareMessage;//\nLet me recommend you this application:\n\n";
-//                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID +"\n\n";
-                    shareMessage = mContentCardList.get(position).getContent() +"\n\n";
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                    startActivity(Intent.createChooser(shareIntent, "choose one"));
-                } catch(Exception e) {
-                    //e.toString();
-                }
-                Context context = getApplicationContext();
-                CharSequence text = "Share Content!";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-            }
-
-            @Override
-            public void onAddFavoriteClick(int position) {
-                Context context = getApplicationContext();
-                CharSequence text = "Already present!";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-            }
-            @Override
-            public void onRemoveFavoriteClick(int position) {
-                Context context = getApplicationContext();
-                CharSequence textDisabled = "Remove it from category.";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, textDisabled, duration);
-                toast.show();
-            }
-        });
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 }

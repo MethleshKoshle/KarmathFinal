@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ExampleContentViewHolder> {
     private ArrayList<ContentCard> mContentCardList;
     private OnItemClickListener mListener;
+    private boolean favoriteBoolean;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -39,13 +40,21 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ExampleC
         public ImageButton mShare;
         public ImageButton mCopyContent;
 
-        public ExampleContentViewHolder(View itemView, final OnItemClickListener listener) {
+        public ExampleContentViewHolder(boolean favoriteBoolean, View itemView, final OnItemClickListener listener) {
             super(itemView);
-            mImageView = itemView.findViewById(R.id.contentIcon);
+            mImageView = itemView.findViewById(R.id.categoryIcon);
             mContentView = itemView.findViewById(R.id.textView11);
             mAddFavorite = itemView.findViewById(R.id.addToFavorite);
             mShare = itemView.findViewById(R.id.shareContent);
             mCopyContent = itemView.findViewById(R.id.copyContent);
+
+            mImageView.setImageResource(R.drawable.ic_favorite);
+            if(favoriteBoolean){
+                mImageView.setVisibility(View.VISIBLE);
+            }
+            else{
+                mImageView.setVisibility(View.INVISIBLE);
+            }
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -97,13 +106,14 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ExampleC
             });
         }
     }
-    public ContentAdapter(ArrayList<ContentCard> exampleList) {
+    public ContentAdapter(boolean isFavorite, ArrayList<ContentCard> exampleList) {
         mContentCardList = exampleList;
+        favoriteBoolean = isFavorite;
     }
     @Override
     public ExampleContentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.example_content, parent, false);
-        ExampleContentViewHolder evh = new ExampleContentViewHolder(v, mListener);
+        ExampleContentViewHolder evh = new ExampleContentViewHolder(favoriteBoolean, v, mListener);
         return evh;
     }
     @Override

@@ -50,7 +50,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()){
             case R.id.nav_song:
                 if(!Conditionals.isInternetWorking(context)){
-                    Toast.makeText(HomeActivity.this, "Connect to Internet to load new content!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, Constant.NO_INTERNET_MESSAGE, Toast.LENGTH_SHORT).show();
                 }
                 Intent intent1 = new Intent(HomeActivity.this, SongActivity.class);
                 startActivity(intent1);
@@ -60,17 +60,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent2);
                 break;
             case R.id.nav_share:
-                try {
-                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setType("text/plain");
-                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
-                    String shareMessage= "\nLet me recommend you this beautiful qoute App *Karmath*:\n\n";
-                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=com.methleshkoshle.myapplication" + "\n\n";
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                    startActivity(Intent.createChooser(shareIntent, "choose one"));
-                } catch(Exception e) {
-                    //e.toString();
-                }
+                Constant.shareApp(getApplicationContext());
                 break;
             case R.id.nav_abt_me:
                 Intent intent5 = new Intent(HomeActivity.this, AboutmeActivity.class);
@@ -130,9 +120,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 ContentActivity.fileName = Constant.fileName[position];
                 ContentActivity.tempFileName = Constant.tempFileName[position];
                 ContentActivity.imageResource = Constant.imageResource[position];
+                ContentActivity.menuResource = Constant.menuResource[position];
                 ContentActivity.labelResID = Constant.labelResID[position];
                 if(!Conditionals.isInternetWorking(context)) {
-                    Toast.makeText(HomeActivity.this, "Connect to Internet to load new content!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, Constant.NO_INTERNET_MESSAGE, Toast.LENGTH_SHORT).show();
                 }
                 startActivity(intent);
             }
