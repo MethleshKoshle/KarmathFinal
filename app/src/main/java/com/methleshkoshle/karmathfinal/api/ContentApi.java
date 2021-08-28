@@ -40,12 +40,12 @@ public class ContentApi{
             jsonBody.put("Author", "BNK");
 
             JsonObjectRequest jsonObjectRequest = new
-                    JsonObjectRequest(Request.Method.GET, Constant.contentUrl, jsonBody, new Response.Listener<JSONObject>() {
+                    JsonObjectRequest(Request.Method.GET, Constant.contentProdUrl, jsonBody, new Response.Listener<JSONObject>() {
                 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                 @Override
                 public void onResponse(JSONObject response) {
                     String text = response.toString();
-                    ContentResponse contentResponse = new Gson().fromJson(response.toString(), ContentResponse.class);
+                    ContentResponse contentResponse = new Gson().fromJson(text, ContentResponse.class);
                     String categoryJson = contentResponse.categories.get(categoryName).toString();
 
                     Map category = new Gson().fromJson(categoryJson, Map.class);

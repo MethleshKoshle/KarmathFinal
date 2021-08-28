@@ -23,7 +23,8 @@ public class Constant {
 
     public static Integer CATEGORY_COUNT = 9;
 
-    public static final String contentUrl = "http://10.0.2.2:8090/content/";
+    public static final String contentLocalUrl = "http://10.0.2.2:8090/content/";
+    public static final String contentProdUrl = "https://drive.google.com/uc?export=download&id=1aYxImWjN5AyJ0LboNSioiKGMutgC3Gei";
 
     public static final String [] hindiName = {
             "विशेष", "भगवान", "दर्द", "दोस्ती",
