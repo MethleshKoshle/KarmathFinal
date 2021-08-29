@@ -55,7 +55,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="nosensor"/>
         <activity
-            android:name="com.methleshkoshle.karmathfinal.feedback.AboutmeActivity"
+            android:name="com.methleshkoshle.karmathfinal.feedback.AboutMeActivity"
             android:label="एप्लिकेशन के बारे में"
             android:parentActivityName="com.methleshkoshle.karmathfinal.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"

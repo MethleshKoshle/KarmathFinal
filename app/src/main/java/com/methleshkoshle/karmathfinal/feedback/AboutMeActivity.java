@@ -6,12 +6,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.methleshkoshle.karmathfinal.R;
 import com.methleshkoshle.karmathfinal.constant.Constant;
 
-public class AboutmeActivity extends AppCompatActivity {
+public class AboutMeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

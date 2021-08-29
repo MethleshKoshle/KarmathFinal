@@ -21,7 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.methleshkoshle.karmathfinal.adapter.ItemAdapter;
 import com.methleshkoshle.karmathfinal.constant.Conditionals;
 import com.methleshkoshle.karmathfinal.constant.Constant;
-import com.methleshkoshle.karmathfinal.feedback.AboutmeActivity;
+import com.methleshkoshle.karmathfinal.feedback.AboutMeActivity;
 import com.methleshkoshle.karmathfinal.feedback.WriteActivity;
 import com.methleshkoshle.karmathfinal.model.ItemRow;
 import com.methleshkoshle.karmathfinal.pages.ContentActivity;
@@ -81,7 +81,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 context.startActivity(Intent.createChooser(shareIntent, "choose one"));
                 break;
             case R.id.nav_abt_me:
-                Intent intent5 = new Intent(HomeActivity.this, AboutmeActivity.class);
+                Intent intent5 = new Intent(HomeActivity.this, AboutMeActivity.class);
                 startActivity(intent5);
                 break;
             case R.id.nav_write_a_review:

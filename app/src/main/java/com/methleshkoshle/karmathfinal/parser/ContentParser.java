@@ -33,4 +33,19 @@ public class ContentParser {
         }
         return contentTextList;
     }
+
+    public static String getContentFromIntegerList(List<Object> content) {
+        String text = "";
+        StringBuilder stringBuilder = new StringBuilder();
+        for(Object integer : content){
+            double db = (double) integer;
+            int integerValue = (int) db;
+            stringBuilder.append(Character.toChars(integerValue));
+            if(integerValue == 2404 || integerValue == 44){
+                stringBuilder.append("\n");
+            }
+        }
+        text = stringBuilder.toString();
+        return text;
+    }
 }
