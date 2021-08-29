@@ -6,11 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.MenuRes;
@@ -25,7 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.methleshkoshle.karmathfinal.HomeActivity;
 import com.methleshkoshle.karmathfinal.api.ContentApi;
 import com.methleshkoshle.karmathfinal.constant.Conditionals;
 import com.methleshkoshle.karmathfinal.constant.Constant;
@@ -43,6 +39,7 @@ import java.util.ArrayList;
 public class ContentActivity extends AppCompatActivity {
 
     public static String name;
+    public static String type;
     public static String fileName;
     public static String tempFileName;
     public static int imageResource;
@@ -52,7 +49,6 @@ public class ContentActivity extends AppCompatActivity {
     public static int labelResID;
 
     public static LottieAnimationView lottieAnimationView;
-    public static ImageView categoryImageView;
 
     public static RecyclerView mRecyclerView;
     public static ContentAdapter mAdapter;
@@ -120,7 +116,9 @@ public class ContentActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onCopyClick(int position) {
-                        String text = contentTextList.contentList.get(position).content;
+                        String text = contentTextList.contentList.get(position).content+"\n\n";
+                        text += "Shared via © *Karmath App*\n";
+                        text += Constant.playstoreUrl;
                         myClip = ClipData.newPlainText("text", text);
                         myClipboard.setPrimaryClip(myClip);
 
@@ -134,7 +132,13 @@ public class ContentActivity extends AppCompatActivity {
                     @Override
                     public void onShareClick(int position) {
                         String shareMessage = contentTextList.contentList.get(position).content +"\n\n";
-                        Constant.shareContent(getApplicationContext(), shareMessage);
+                        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                        shareIntent.setType("text/plain");
+                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
+                        shareMessage += "Shared via © *Karmath App*\n";
+                        shareMessage += Constant.playstoreUrl;
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                        startActivity(Intent.createChooser(shareIntent, "choose one to share."));
                     }
 
                     @Override
@@ -165,10 +169,10 @@ public class ContentActivity extends AppCompatActivity {
         mRecyclerView.setVisibility(View.INVISIBLE);
 
         if(Conditionals.isInternetWorking(getApplicationContext())) {
-            ContentApi.getContent(getApplicationContext(), name, "content");
+            ContentApi.getContent(getApplicationContext(), name, type);
         }
         else{
-            CommonDatabase.getContent(name, "content");
+            CommonDatabase.getContent(name, type);
             Toast.makeText(ContentActivity.this, Constant.NO_INTERNET_MESSAGE, Toast.LENGTH_SHORT).show();
         }
 
@@ -187,6 +191,9 @@ public class ContentActivity extends AppCompatActivity {
                     imageResource, content.content, content.favorite
                 )
             );
+        }
+        if(mContentCardList.size()==0){
+            Toast.makeText(ContentActivity.this, "No "+type+"s for "+name+" :(", Toast.LENGTH_SHORT).show();
         }
         return mContentCardList;
     }

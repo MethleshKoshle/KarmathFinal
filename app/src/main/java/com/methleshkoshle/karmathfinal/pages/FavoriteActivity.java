@@ -15,10 +15,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.methleshkoshle.karmathfinal.HomeActivity;
 import com.methleshkoshle.karmathfinal.constant.Constant;
 import com.methleshkoshle.karmathfinal.R;
 import com.methleshkoshle.karmathfinal.adapter.ContentAdapter;
@@ -29,13 +29,6 @@ import com.methleshkoshle.karmathfinal.model.ContentCard;
 import com.methleshkoshle.karmathfinal.model.ContentViewModel;
 
 import java.util.ArrayList;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.List;
 
 public class FavoriteActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
@@ -89,6 +82,11 @@ public class FavoriteActivity extends AppCompatActivity {
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(mAdapter);
 
+                if(contentTextList.contentList.size()==0){
+                    String type = HomeActivity.songModeOn?Constant.SONG:Constant.CONTENT;
+                    Toast.makeText(FavoriteActivity.this, "No liked "+type+"s :(", Toast.LENGTH_SHORT).show();
+                }
+
                 myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
                 mAdapter.setOnItemClickListener(new ContentAdapter.OnItemClickListener() {
@@ -98,7 +96,9 @@ public class FavoriteActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onCopyClick(int position) {
-                        text = contentTextList.contentList.get(position).content;
+                        text = contentTextList.contentList.get(position).content+"\n\n";
+                        text += "Shared via © *Karmath App*\n";
+                        text += Constant.playstoreUrl;
                         myClip = ClipData.newPlainText("text", text);
                         myClipboard.setPrimaryClip(myClip);
 
@@ -113,7 +113,13 @@ public class FavoriteActivity extends AppCompatActivity {
                     @Override
                     public void onShareClick(int position) {
                         String shareMessage = contentTextList.contentList.get(position).content +"\n\n";
-                        Constant.shareContent(getApplicationContext(), shareMessage);
+                        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                        shareIntent.setType("text/plain");
+                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
+                        shareMessage += "Shared via © *Karmath App*\n";
+                        shareMessage += Constant.playstoreUrl;
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                        startActivity(Intent.createChooser(shareIntent, "choose one to share."));
                     }
 
                     @Override
@@ -139,7 +145,10 @@ public class FavoriteActivity extends AppCompatActivity {
             }
         };
 
-        CommonDatabase.getFavorites("content");
+        if(HomeActivity.songModeOn)
+            CommonDatabase.getFavorites(Constant.SONG);
+        else
+            CommonDatabase.getFavorites(Constant.CONTENT);
 
         contentViewModel.getCurrentContent().observe(this, contentTextListObserver);
 
@@ -164,14 +173,5 @@ public class FavoriteActivity extends AppCompatActivity {
             );
         }
         return mContentCardList;
-    }
-
-    public void showEmptyMessage(){
-        Context context = getApplicationContext();
-        CharSequence text = "No Favorites Yet!";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
     }
 }

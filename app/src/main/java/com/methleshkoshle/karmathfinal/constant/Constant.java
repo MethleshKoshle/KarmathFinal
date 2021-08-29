@@ -1,7 +1,7 @@
 package com.methleshkoshle.karmathfinal.constant;
 
-import android.content.Context;
-import android.content.Intent;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.methleshkoshle.karmathfinal.R;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ import java.util.Map;
  * 8 - Tyag
  */
 
-public class Constant {
+public class Constant extends AppCompatActivity {
 
     public static Integer CATEGORY_COUNT = 9;
 
@@ -98,36 +98,6 @@ public class Constant {
 
     public static String ownerMailId = "miitbh1@gmail.com";
 
-    public static void shareApp(Context context){
-        try {
-            Intent shareIntent = new Intent(Intent.ACTION_SEND);
-            shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
-            String shareMessage = "\nLet me recommend you this beautiful qoute App *Karmath*:\n\n";
-            shareMessage += playstoreUrl + "\n\n";
-            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-            context.startActivity(Intent.createChooser(shareIntent, "choose one"));
-        }
-        catch (Exception e){
-
-        }
-    }
-
-    public static void shareContent(Context context, String shareMessage){
-        try {
-            Intent shareIntent = new Intent(Intent.ACTION_SEND);
-            shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
-            shareMessage += "Shared via © *Karmath App*\n";
-            shareMessage += playstoreUrl;
-            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-            context.startActivity(Intent.createChooser(shareIntent, "choose one to share."));
-        }
-        catch (Exception e){
-
-        }
-    }
-
     public static String playstoreUrl = "https://play.google.com/store/apps/details?id=com.methleshkoshle.myapplication";
     public static String linkedInUrl = "https://www.linkedin.com/in/methlesh-koshle-208a64145/";
     public static String gitHubUrl = "https://github.com/MethleshKoshle";
@@ -135,6 +105,10 @@ public class Constant {
     public static String facebookUrl = "https://www.facebook.com/methlesh.koshle";
 
     public static String NO_INTERNET_MESSAGE = "Connect to Internet to load new content!";
+    public static String SONG_MODE_ON = "Song mode on.";
+    public static String SONG_MODE_OFF = "Song mode off.";
+    public static String SONG = "song";
+    public static String CONTENT = "content";
 
 
 }

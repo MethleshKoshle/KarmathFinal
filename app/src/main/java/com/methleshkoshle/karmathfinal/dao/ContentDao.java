@@ -30,8 +30,8 @@ public interface ContentDao {
     @Query("SELECT * FROM content WHERE category=:category AND type=:type AND favorite=:favorite")
     List<Content> loadAllByCategoryAndTypeAndFavorite(String category, String type, boolean favorite);
 
-    @Query("SELECT * FROM content WHERE favorite=:favorite")
-    List<Content> loadAllByFavorite(boolean favorite);
+    @Query("SELECT * FROM content WHERE favorite=:favorite AND type=:type")
+    List<Content> loadAllByFavoriteAndType(boolean favorite, String type);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Content... contents);

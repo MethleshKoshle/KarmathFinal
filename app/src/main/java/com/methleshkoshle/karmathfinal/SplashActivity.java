@@ -16,6 +16,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        HomeActivity.songModeOn = false;
         CommonDatabase.db = Room.databaseBuilder(getApplicationContext(),
                 ContentDatabase.class, "database-content").allowMainThreadQueries().build();
         Handler handler = new Handler();

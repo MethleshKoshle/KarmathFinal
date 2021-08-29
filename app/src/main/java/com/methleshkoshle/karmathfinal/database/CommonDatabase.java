@@ -20,7 +20,7 @@ public class CommonDatabase {
     }
     public static void getFavorites(String type){
         ContentDao contentDao = db.contentDao();
-        List<Content> contentList = contentDao.loadAllByFavorite(true);
+        List<Content> contentList = contentDao.loadAllByFavoriteAndType(true, type);
         ContentTextList contentTextList = new ContentTextList();
         contentTextList.contentList = contentList;
         FavoriteActivity.contentViewModel.getCurrentContent().setValue(contentTextList);

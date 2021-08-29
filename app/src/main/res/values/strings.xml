@@ -45,4 +45,6 @@
     <string name="PrernaHindi">प्रेरणा</string>
     <string name="TyagHindi">त्याग</string>
     <string name="PriyHindi">प्रिय</string>
+    <string name="SongModeOn">Song mode on</string>
+    <string name="SongModeOff">Song mode off</string>
 </resources>

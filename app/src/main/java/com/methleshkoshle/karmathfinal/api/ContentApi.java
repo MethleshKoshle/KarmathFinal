@@ -49,10 +49,10 @@ public class ContentApi{
                     String categoryJson = contentResponse.categories.get(categoryName).toString();
 
                     Map category = new Gson().fromJson(categoryJson, Map.class);
-                    if(type.equals("song"))
-                        contentTexts = (List<Map>) category.get("song");
+                    if(type.equals(Constant.SONG))
+                        contentTexts = (List<Map>) category.get(Constant.SONG);
                     else
-                        contentTexts =  (List<Map>) category.get("content");
+                        contentTexts =  (List<Map>) category.get(Constant.CONTENT);
 
                     ContentTextList contentTextList = ContentParser.getContentTextList(contentTexts);
 
