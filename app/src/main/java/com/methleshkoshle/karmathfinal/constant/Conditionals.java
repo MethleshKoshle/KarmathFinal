@@ -10,14 +10,6 @@ import android.os.Build;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Conditionals extends AppCompatActivity {
-    public static boolean isDigit(char c) {
-        return (c >= '0' && c <= '9');
-    }
-
-    public static boolean lineBreak(char c){
-        return (c == '।' || c == ',' || c == '|' || c == '.' || c == '?');
-    }
-
     public static boolean isInternetWorking(Context context) {
         final ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.methleshkoshle.karmathfinal.R;
@@ -18,22 +19,22 @@ public class AboutmeActivity extends AppCompatActivity {
 
     }
 
-    public void showLinkedin(View view) {
+    public void showLinkedin(MenuItem menuItem) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constant.linkedInUrl));
         startActivity(browserIntent);
     }
 
-    public void showGithub(View view) {
+    public void showGithub(MenuItem menuItem) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constant.gitHubUrl));
         startActivity(browserIntent);
     }
 
-    public void showInstagram(View view) {
+    public void showInstagram(MenuItem menuItem) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constant.instagramUrl));
         startActivity(browserIntent);
     }
 
-    public void showFacebook(View view) {
+    public void showFacebook(MenuItem menuItem) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constant.facebookUrl));
         startActivity(browserIntent);
     }
