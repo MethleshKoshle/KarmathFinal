@@ -17,5 +17,5 @@
 3. Add to favorites.
 4. Share the app.
 
-Download the apk here: https://drive.google.com/uc?export=download&id=1bwR-bK3bIvAoSKkD54j_tBgOzN80tspb
+Download the apk here: https://play.google.com/store/apps/details?id=com.methleshkoshle.myapplication
 
