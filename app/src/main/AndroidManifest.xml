@@ -10,11 +10,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:targetApi="m">
         <activity
-            android:name="com.methleshkoshle.karmathfinal.MainActivity"
+            android:name="com.methleshkoshle.karmathfinal.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="nosensor">
             <intent-filter>
@@ -24,44 +26,44 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.methleshkoshle.karmathfinal.MainActivity2"
+            android:name="com.methleshkoshle.karmathfinal.HomeActivity"
             android:label="कर्मठ"
-            android:parentActivityName="com.methleshkoshle.karmathfinal.MainActivity"
+            android:parentActivityName="com.methleshkoshle.karmathfinal.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="nosensor"/>
         <activity
             android:name="com.methleshkoshle.karmathfinal.pages.ContentActivity"
-            android:parentActivityName="com.methleshkoshle.karmathfinal.MainActivity2"
+            android:parentActivityName="com.methleshkoshle.karmathfinal.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="nosensor"/>
         <activity
-            android:name="com.methleshkoshle.karmathfinal.SongActivity"
+            android:name="com.methleshkoshle.karmathfinal.pages.SongActivity"
             android:label="गीत"
-            android:parentActivityName="com.methleshkoshle.karmathfinal.MainActivity2"
+            android:parentActivityName="com.methleshkoshle.karmathfinal.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="nosensor"/>
         <activity
-            android:name="com.methleshkoshle.karmathfinal.ThoughtActivity"
+            android:name="com.methleshkoshle.karmathfinal.pages.ThoughtActivity"
             android:label="आज का विचार"
-            android:parentActivityName="com.methleshkoshle.karmathfinal.MainActivity2"
+            android:parentActivityName="com.methleshkoshle.karmathfinal.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="nosensor"/>
         <activity
-            android:name="com.methleshkoshle.karmathfinal.FavoriteActivity"
+            android:name="com.methleshkoshle.karmathfinal.pages.FavoriteActivity"
             android:label="प्रिय"
-            android:parentActivityName="com.methleshkoshle.karmathfinal.MainActivity2"
+            android:parentActivityName="com.methleshkoshle.karmathfinal.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="nosensor"/>
         <activity
-            android:name="com.methleshkoshle.karmathfinal.AboutmeActivity"
+            android:name="com.methleshkoshle.karmathfinal.feedback.AboutMeActivity"
             android:label="एप्लिकेशन के बारे में"
-            android:parentActivityName="com.methleshkoshle.karmathfinal.MainActivity2"
+            android:parentActivityName="com.methleshkoshle.karmathfinal.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="nosensor"/>
         <activity
-            android:name="com.methleshkoshle.karmathfinal.WriteActivity"
+            android:name="com.methleshkoshle.karmathfinal.feedback.WriteActivity"
             android:label="समीक्षा लिखें"
-            android:parentActivityName="com.methleshkoshle.karmathfinal.MainActivity2"
+            android:parentActivityName="com.methleshkoshle.karmathfinal.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="nosensor"/>
     </application>

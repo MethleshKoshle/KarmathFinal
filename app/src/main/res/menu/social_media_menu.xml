@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/facebookMenu"
+        android:title="@string/facebook"
+        android:onClick="showFacebook"
+        android:icon="@drawable/facebook" />
+    <item android:id="@+id/instagramMenu"
+        android:title="@string/instagram"
+        android:onClick="showInstagram"
+        android:icon="@drawable/instagram" />
+    <item android:id="@+id/githubMenu"
+        android:title="@string/github"
+        android:onClick="showGithub"
+        android:icon="@drawable/github" />
+    <item android:id="@+id/linkedinMenu"
+        android:title="@string/linkedin"
+        android:onClick="showLinkedin"
+        android:icon="@drawable/linkedin" />
+</menu>

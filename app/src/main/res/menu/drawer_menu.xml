@@ -3,15 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_song"
-            android:icon="@drawable/ic_lyrics"
-            android:title="गीत" />
         <item android:id="@+id/nav_thought"
             android:icon="@drawable/ic_thought"
             android:title="आज का विचार" />
-<!--        <item android:id="@+id/nav_oneliner"-->
-<!--            android:icon="@drawable/ic_oneliner"-->
-<!--            android:title="@string/twoliner" />-->
         <item android:id="@+id/nav_favorites"
             android:icon="@drawable/ic_favorite"
             android:title="प्रिय" />

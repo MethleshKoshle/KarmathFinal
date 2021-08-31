@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/aboutme_background_1"
     android:id="@+id/favorite_layout"
-    tools:context="com.methleshkoshle.karmathfinal.FavoriteActivity">
+    tools:context="com.methleshkoshle.karmathfinal.pages.FavoriteActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,6 +35,14 @@
             android:background="@android:color/darker_gray"
             android:padding="4dp"
             android:scrollbars="vertical" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="loader-animation.json"
+            app:lottie_loop="true" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
