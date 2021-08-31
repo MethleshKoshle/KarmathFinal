@@ -74,75 +74,72 @@ public class FavoriteActivity extends AppCompatActivity {
 
         contentViewModel = new ViewModelProvider(this).get(ContentViewModel.class);
 
-        final Observer<Content.ContentTextList> contentTextListObserver = new Observer<Content.ContentTextList>() {
-            @Override
-            public void onChanged(@Nullable final Content.ContentTextList contentTextList) {
-                mAdapter = new ContentAdapter(true, updateUI(contentTextList));
+        final Observer<Content.ContentTextList> contentTextListObserver = contentTextList -> {
+            mAdapter = new ContentAdapter(true, updateUI(contentTextList));
 
-                mRecyclerView.setLayoutManager(mLayoutManager);
-                mRecyclerView.setAdapter(mAdapter);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            mRecyclerView.setAdapter(mAdapter);
 
-                if(contentTextList.contentList.size()==0){
-                    String type = HomeActivity.songModeOn?Constant.SONG:Constant.CONTENT;
-                    Toast.makeText(FavoriteActivity.this, "No liked "+type+"s :(", Toast.LENGTH_SHORT).show();
+            if(contentTextList.contentList.size()==0){
+                String type = HomeActivity.songModeOn?Constant.SONG:Constant.CONTENT;
+                Toast.makeText(FavoriteActivity.this, "No liked "+type+"s :(", Toast.LENGTH_SHORT).show();
+            }
+
+            myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+
+            mAdapter.setOnItemClickListener(new ContentAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+
+                }
+                @Override
+                public void onCopyClick(int position) {
+                    text = contentTextList.contentList.get(position).content+"\n\n";
+                    text += "Shared via © *Karmath App*\n";
+                    text += Constant.playstoreUrl;
+                    myClip = ClipData.newPlainText("text", text);
+                    myClipboard.setPrimaryClip(myClip);
+
+                    Context context = getApplicationContext();
+                    CharSequence text = "Content Copied!";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
                 }
 
-                myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                @Override
+                public void onShareClick(int position) {
+                    String shareMessage = contentTextList.contentList.get(position).content +"\n\n";
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
+                    shareMessage += "Shared via © *Karmath App*\n";
+                    shareMessage += Constant.playstoreUrl;
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    startActivity(Intent.createChooser(shareIntent, "choose one to share."));
+                }
 
-                mAdapter.setOnItemClickListener(new ContentAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
+                @Override
+                public void onAddFavoriteClick(int position) {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Already present!";
+                    int duration = Toast.LENGTH_SHORT;
 
-                    }
-                    @Override
-                    public void onCopyClick(int position) {
-                        text = contentTextList.contentList.get(position).content+"\n\n";
-                        text += "Shared via © *Karmath App*\n";
-                        text += Constant.playstoreUrl;
-                        myClip = ClipData.newPlainText("text", text);
-                        myClipboard.setPrimaryClip(myClip);
-
-                        Context context = getApplicationContext();
-                        CharSequence text = "Content Copied!";
-                        int duration = Toast.LENGTH_SHORT;
-
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-                    }
-
-                    @Override
-                    public void onShareClick(int position) {
-                        String shareMessage = contentTextList.contentList.get(position).content +"\n\n";
-                        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                        shareIntent.setType("text/plain");
-                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
-                        shareMessage += "Shared via © *Karmath App*\n";
-                        shareMessage += Constant.playstoreUrl;
-                        shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                        startActivity(Intent.createChooser(shareIntent, "choose one to share."));
-                    }
-
-                    @Override
-                    public void onAddFavoriteClick(int position) {
-                        Context context = getApplicationContext();
-                        CharSequence text = "Already present!";
-                        int duration = Toast.LENGTH_SHORT;
-
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-                    }
-                    @Override
-                    public void onRemoveFavoriteClick(int position) {
-                        Content content = contentTextList.contentList.get(position);
-                        content.favorite = false;
-                        contentTextList.contentList.set(position, content);
-                        contentDao.insertAll(content);
-                    }
-                });
-                lottieAnimationView.setVisibility(View.INVISIBLE);
-                mRecyclerView.setVisibility(View.VISIBLE);
-                mAdapter.notifyDataSetChanged();
-            }
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+                @Override
+                public void onRemoveFavoriteClick(int position) {
+                    Content content = contentTextList.contentList.get(position);
+                    content.favorite = false;
+                    contentTextList.contentList.set(position, content);
+                    contentDao.insertAll(content);
+                }
+            });
+            lottieAnimationView.setVisibility(View.INVISIBLE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mAdapter.notifyDataSetChanged();
         };
 
         if(HomeActivity.songModeOn)

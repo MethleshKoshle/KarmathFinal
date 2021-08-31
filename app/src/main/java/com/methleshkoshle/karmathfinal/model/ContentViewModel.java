@@ -6,7 +6,6 @@ import com.methleshkoshle.karmathfinal.model.Content.ContentTextList;
 
 public class ContentViewModel extends ViewModel {
 
-    // Create a LiveData with a String
     private MutableLiveData<ContentTextList> currentContentTextList;
 
     public MutableLiveData<ContentTextList> getCurrentContent() {
@@ -15,6 +14,4 @@ public class ContentViewModel extends ViewModel {
         }
         return currentContentTextList;
     }
-
-// Rest of the ViewModel...
 }

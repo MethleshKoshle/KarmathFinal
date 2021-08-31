@@ -60,24 +60,6 @@ public class Constant extends AppCompatActivity {
         put("Pyaar", 6); put("Prerna", 7); put("Tyag", 8);
     }};
 
-    public static final String songFileName="Song.txt";
-
-    public static final String tempSongFile="SongTemp.txt";
-
-    public static final String [] sourceURL = {
-            "https://drive.google.com/uc?export=download&id=1ZLUs31rvs5mXpmBy8YaxIA0AYLfzXstH",
-            "https://drive.google.com/uc?export=download&id=1PTktNCb6RNB93oStv-vxSDVCkfCNw86v",
-            "https://drive.google.com/uc?export=download&id=1balIvuyQmBmxifybTpDm5fmK0tq46jGb",
-            "https://drive.google.com/uc?export=download&id=19_cYlNdXjjbMnK0WPvMDssYAToHrmdue",
-            "https://drive.google.com/uc?export=download&id=1BOgE_livzQX85QteF5NgowIJ8cBxVy3_",
-            "https://drive.google.com/uc?export=download&id=1ctnu8bqHzgM0RSRnPWpmtPAqxA9ZA1Si",
-            "https://drive.google.com/uc?export=download&id=1O47PhC-ZjFD3gTimwan3Sa0siCrf_PX-",
-            "https://drive.google.com/uc?export=download&id=1k5Ot5xhQT6IbJ3blPZAbONAtnIq48Z_W",
-            "https://drive.google.com/uc?export=download&id=1K5bW-KmuSg_WzUUW6vz7O0Kj1zW-J-c7"
-    };
-
-    public static final String sourceSongURL = "https://drive.google.com/uc?export=download&id=1NNferlDkfEJ9Q1zBgkQpFwSVzBO4Y5lb";
-
     public static final int [] imageResource = {
             R.drawable.ic_vishesh, R.drawable.ic_bhagwan, R.drawable.ic_dard,
             R.drawable.ic_dosti, R.drawable.ic_guru, R.drawable.ic_lagan,

@@ -99,68 +99,65 @@ public class ContentActivity extends AppCompatActivity {
 
         contentViewModel = new ViewModelProvider(this).get(ContentViewModel.class);
 
-        final Observer<ContentTextList> contentTextListObserver = new Observer<ContentTextList>() {
-            @Override
-            public void onChanged(@Nullable final ContentTextList contentTextList) {
-                mAdapter = new ContentAdapter(false, updateUI(contentTextList));
+        final Observer<ContentTextList> contentTextListObserver = contentTextList -> {
+            mAdapter = new ContentAdapter(false, updateUI(contentTextList));
 
-                mRecyclerView.setLayoutManager(mLayoutManager);
-                mRecyclerView.setAdapter(mAdapter);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            mRecyclerView.setAdapter(mAdapter);
 
-                myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+            myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
-                mAdapter.setOnItemClickListener(new ContentAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
+            mAdapter.setOnItemClickListener(new ContentAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
 
-                    }
-                    @Override
-                    public void onCopyClick(int position) {
-                        String text = contentTextList.contentList.get(position).content+"\n\n";
-                        text += "Shared via © *Karmath App*\n";
-                        text += Constant.playstoreUrl;
-                        myClip = ClipData.newPlainText("text", text);
-                        myClipboard.setPrimaryClip(myClip);
+                }
+                @Override
+                public void onCopyClick(int position) {
+                    String text = contentTextList.contentList.get(position).content+"\n\n";
+                    text += "Shared via © *Karmath App*\n";
+                    text += Constant.playstoreUrl;
+                    myClip = ClipData.newPlainText("text", text);
+                    myClipboard.setPrimaryClip(myClip);
 
-                        Context context = getApplicationContext();
-                        text = "Content Copied!";
-                        int duration = Toast.LENGTH_SHORT;
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-                    }
+                    Context context = getApplicationContext();
+                    text = "Content Copied!";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
 
-                    @Override
-                    public void onShareClick(int position) {
-                        String shareMessage = contentTextList.contentList.get(position).content +"\n\n";
-                        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                        shareIntent.setType("text/plain");
-                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
-                        shareMessage += "Shared via © *Karmath App*\n";
-                        shareMessage += Constant.playstoreUrl;
-                        shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                        startActivity(Intent.createChooser(shareIntent, "choose one to share."));
-                    }
+                @Override
+                public void onShareClick(int position) {
+                    String shareMessage = contentTextList.contentList.get(position).content +"\n\n";
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
+                    shareMessage += "Shared via © *Karmath App*\n";
+                    shareMessage += Constant.playstoreUrl;
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    startActivity(Intent.createChooser(shareIntent, "choose one to share."));
+                }
 
-                    @Override
-                    public void onAddFavoriteClick(int position) {
-                        Content content = contentTextList.contentList.get(position);
-                        content.favorite = true;
-                        contentTextList.contentList.set(position, content);
-                        contentDao.insertAll(content);
-                    }
+                @Override
+                public void onAddFavoriteClick(int position) {
+                    Content content = contentTextList.contentList.get(position);
+                    content.favorite = true;
+                    contentTextList.contentList.set(position, content);
+                    contentDao.insertAll(content);
+                }
 
-                    @Override
-                    public void onRemoveFavoriteClick(int position) {
-                        Content content = contentTextList.contentList.get(position);
-                        content.favorite = false;
-                        contentTextList.contentList.set(position, content);
-                        contentDao.insertAll(content);
-                    }
-                });
-                lottieAnimationView.setVisibility(View.INVISIBLE);
-                mRecyclerView.setVisibility(View.VISIBLE);
-                mAdapter.notifyDataSetChanged();
-            }
+                @Override
+                public void onRemoveFavoriteClick(int position) {
+                    Content content = contentTextList.contentList.get(position);
+                    content.favorite = false;
+                    contentTextList.contentList.set(position, content);
+                    contentDao.insertAll(content);
+                }
+            });
+            lottieAnimationView.setVisibility(View.INVISIBLE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mAdapter.notifyDataSetChanged();
         };
 
         contentViewModel.getCurrentContent().observe(this, contentTextListObserver);

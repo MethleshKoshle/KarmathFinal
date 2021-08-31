@@ -51,39 +51,33 @@ public class ThoughtActivity extends AppCompatActivity {
 
         contentViewModel = new ViewModelProvider(this).get(ContentViewModel.class);
 
-        copyThought.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String content = ThoughtActivity.thoughtContent+"\n\n";
-                content += "Shared via © *Karmath App*\n";
-                content += Constant.playstoreUrl;
-                myClip = ClipData.newPlainText("text", content);
-                myClipboard.setPrimaryClip(myClip);
+        copyThought.setOnClickListener(v -> {
+            String content = ThoughtActivity.thoughtContent+"\n\n";
+            content += "Shared via © *Karmath App*\n";
+            content += Constant.playstoreUrl;
+            myClip = ClipData.newPlainText("text", content);
+            myClipboard.setPrimaryClip(myClip);
 
-                Context context = getApplicationContext();
-                CharSequence msgText = "Content Copied!";
-                int duration = Toast.LENGTH_SHORT;
+            Context context = getApplicationContext();
+            CharSequence msgText = "Content Copied!";
+            int duration = Toast.LENGTH_SHORT;
 
-                Toast toast = Toast.makeText(context, msgText, duration);
-                toast.show();
-            }
+            Toast toast = Toast.makeText(context, msgText, duration);
+            toast.show();
         });
-        shareThought.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setType("text/plain");
-                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
-                    String shareMessage;
-                    shareMessage = ThoughtActivity.thoughtContent+"\n\n";
-                    shareMessage += "Shared via © *Karmath App*\n";
-                    shareMessage += Constant.playstoreUrl;
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                    startActivity(Intent.createChooser(shareIntent, "choose one"));
-                } catch(Exception e) {
-                    //e.toString();
-                }
+        shareThought.setOnClickListener(v -> {
+            try {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Karmath");
+                String shareMessage;
+                shareMessage = ThoughtActivity.thoughtContent+"\n\n";
+                shareMessage += "Shared via © *Karmath App*\n";
+                shareMessage += Constant.playstoreUrl;
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                startActivity(Intent.createChooser(shareIntent, "choose one"));
+            } catch(Exception e) {
+                //e.toString();
             }
         });
     }

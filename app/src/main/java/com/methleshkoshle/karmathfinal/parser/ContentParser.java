@@ -12,18 +12,8 @@ public class ContentParser {
         ContentTextList contentTextList = new ContentTextList();
         contentTextList.contentList = new ArrayList<>();
         for(Map contentTextMap : contentTextMapList){
-            String text = "";
-            StringBuilder stringBuilder = new StringBuilder();
-            ArrayList<Integer> sequence = (ArrayList<Integer>) contentTextMap.get("content");
-            for(Object integer : sequence){
-                double db = (double) integer;
-                int integerValue = (int) db;
-                stringBuilder.append(Character.toChars(integerValue));
-                if(integerValue == 2404 || integerValue == 44){
-                    stringBuilder.append("\n");
-                }
-            }
-            text = stringBuilder.toString();
+            ArrayList<Object> sequence = (ArrayList<Object>) contentTextMap.get("content");
+            String text = getContentFromIntegerList(sequence);
             Content content = new Content();
             double doubleId = (double) contentTextMap.get("id");
             content.id = (int) doubleId;

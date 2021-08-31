@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if(HomeActivity.songModeOn) {
             HomeActivity.songModeOn=false;
             menuItem.setIcon(R.drawable.ic_song_off);
-            menuItem.setTitle(R.string.SongModeOff);
+            menuItem.setTitle(R.string.ContentModeOn);
             Toast.makeText(HomeActivity.this, Constant.SONG_MODE_OFF, Toast.LENGTH_SHORT).show();
 
         }
@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 String shareMessage = "\nLet me recommend you this beautiful qoute App *Karmath*:\n\n";
                 shareMessage += Constant.playstoreUrl + "\n\n";
                 shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                context.startActivity(Intent.createChooser(shareIntent, "choose one"));
+                startActivity(Intent.createChooser(shareIntent, "choose one"));
                 break;
             case R.id.nav_abt_me:
                 Intent intent5 = new Intent(HomeActivity.this, AboutMeActivity.class);

@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/vishesh"
+        android:id="@+id/contentModeOn"
         android:icon="@drawable/ic_song_off"
         android:orderInCategory="100"
         android:onClick="myOnMenuClickMethod"
         app:showAsAction="always"
-        android:title="@string/SongModeOff" />
+        android:title="@string/ContentModeOn" />
 </menu>
