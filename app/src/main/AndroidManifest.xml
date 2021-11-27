@@ -2,9 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.methleshkoshle.karmathfinal">
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" tools:node="remove"/>
     <application
         android:allowBackup="true"
@@ -18,7 +21,8 @@
         <activity
             android:name="com.methleshkoshle.karmathfinal.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor">
+            android:screenOrientation="nosensor"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,12 +37,6 @@
             android:screenOrientation="nosensor"/>
         <activity
             android:name="com.methleshkoshle.karmathfinal.pages.ContentActivity"
-            android:parentActivityName="com.methleshkoshle.karmathfinal.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor"/>
-        <activity
-            android:name="com.methleshkoshle.karmathfinal.pages.SongActivity"
-            android:label="गीत"
             android:parentActivityName="com.methleshkoshle.karmathfinal.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="nosensor"/>
